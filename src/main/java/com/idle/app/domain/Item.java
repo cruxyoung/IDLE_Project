@@ -15,7 +15,7 @@ public class Item implements Serializable {
 	@Column(name="Id")
 	private long id;
 	
-	@Column
+	@Column(name="name")
 	private String name;
 
 	public String getName() {
