@@ -3,20 +3,20 @@ package com.idle.app.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
 
 import com.idle.app.domain.Item;
 
 import junit.framework.TestCase;
 
+
 public class ItemManagerTest extends TestCase {
 	private List<Item> items;
 	
-	
+	@Resource(name="itemManager")
 	private ItemManager itemManager;
 
 	protected void setUp() throws Exception{
-		itemManager = new ItemManager();
 		Item item = new Item();
 		items = new ArrayList<Item>();
 		
