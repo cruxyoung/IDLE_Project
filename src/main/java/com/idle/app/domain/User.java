@@ -17,6 +17,9 @@ public class User implements Serializable{
 	@Column(name="user_id")
 	private long userId;
 	
+	@Column(name="user_name")
+	private String userName;
+	
 	@Column(name="password")
     private String password;
 	
@@ -90,6 +93,15 @@ public class User implements Serializable{
 	public void setLastEditTime(Date lastEditTime) {
 		this.lastEditTime = lastEditTime;
 	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
 	
 	
 }
