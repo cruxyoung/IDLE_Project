@@ -33,6 +33,12 @@ public class ItemManagerTest extends BaseTest {
 		}
 		assertEquals(null,null);
 	}
+	@Test
+	public void testAdditem(){
+		
+	}
+	
+	
 	
 }
 
