@@ -5,12 +5,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.junit.Test;
+
+import com.idle.app.BaseTest;
 import com.idle.app.domain.Item;
 
-import junit.framework.TestCase;
 
-
-public class ItemManagerTest extends TestCase {
+public class ItemManagerTest extends BaseTest {
 	private List<Item> items;
 	
 	@Resource(name="itemManager")
@@ -24,14 +25,13 @@ public class ItemManagerTest extends TestCase {
 		itemManager.addItem(item);
 		
 	}
-	
+	@Test
 	public void testGetItems() {
 		List<Item> res = itemManager.getItems();
 		for(Item it:res) {
 			System.out.println(it.getName());
 		}
-		assertEquals(null, null);
-		
+		assertEquals(null,null);
 	}
 	
 }
