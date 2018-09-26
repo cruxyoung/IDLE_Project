@@ -10,50 +10,56 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.idle.app.domain.Item;
 
-@Service(value="itemManager")
+@Service(value = "itemManager")
 @Transactional
 public class ItemManager {
 	private SessionFactory sessionFactory;
 	private List<Item> items;
-	
+
 	@Autowired
 	public void setSessionFactory(SessionFactory sf) {
 		this.sessionFactory = sf;
 	}
-//	C
+
+	// C
 	public void addItem(Item item) {
 		this.sessionFactory.getCurrentSession().save(item);
-		
+
 	}
-//	D
+
+	// D
 	public void deleteItem(long id) {
 		Session currentSession = this.sessionFactory.getCurrentSession();
 		Item item = (Item) currentSession.get(Item.class, id);
 		currentSession.delete(item);
 	}
-	
-//	U
+
+	// U
 	public void updateItem(Item item) {
 		Session currentSession = this.sessionFactory.getCurrentSession();
 		currentSession.merge(item);
 	}
 
-//R	
+	// R
 	public Item getItemById(long id) {
-		Session currentSession=this.sessionFactory.getCurrentSession();
-		
-		Item item= (Item) currentSession.get(Item.class, id);
+		Session currentSession = this.sessionFactory.getCurrentSession();
+
+		Item item = (Item) currentSession.get(Item.class, id);
 		return item;
 	}
-	
-	
+
 	public void setItems(List<Item> items) {
 		this.items = items;
 	}
-	public List<Item> getItems(){
+
+	public List<Item> getItems() {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Item").list();
 	}
 	
-	
-	
+	public void deleteAllItems(String myTable) {
+		String hql = String.format("delete from %s", myTable);
+		this.sessionFactory.getCurrentSession().createQuery(hql);
+		
+	}
+
 }
