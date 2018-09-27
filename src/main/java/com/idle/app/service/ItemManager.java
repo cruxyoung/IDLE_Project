@@ -2,6 +2,7 @@ package com.idle.app.service;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,10 +56,11 @@ public class ItemManager {
 	public List<Item> getItems() {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Item").list();
 	}
-	
+
 	public void deleteAllItems(String myTable) {
 		String hql = String.format("delete from %s", myTable);
-		this.sessionFactory.getCurrentSession().createQuery(hql);
+		Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+		query.executeUpdate();
 		
 	}
 

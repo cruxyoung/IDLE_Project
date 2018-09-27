@@ -18,7 +18,7 @@ public class Item implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="item_id")
-	private Long id;
+	private long id;
 	
 	@Column(name="item_name")
 	private String name;
@@ -27,7 +27,7 @@ public class Item implements Serializable {
 	private String photo;
 
 	@Column(name="item_quantity")
-	private Long quantity;
+	private long quantity;
 
 	@Column(name="item_description")
 	private String description;
@@ -75,7 +75,7 @@ public class Item implements Serializable {
 		return quantity;
 	}
 
-	public void setQuantity(Long quantity) {
+	public void setQuantity(long quantity) {
 		this.quantity = quantity;
 	}
 

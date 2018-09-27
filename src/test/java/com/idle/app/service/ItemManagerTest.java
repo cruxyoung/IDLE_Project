@@ -1,11 +1,11 @@
 package com.idle.app.service;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.junit.Test;
+import org.junit.*;
 
 import com.idle.app.BaseTest;
 import com.idle.app.domain.Item;
@@ -16,28 +16,31 @@ public class ItemManagerTest extends BaseTest {
 	@Resource(name = "itemManager")
 	private ItemManager itemManager;
 	
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		Item item = new Item();
-		items = new ArrayList<Item>();
 
 		item.setName("testItem");
-		itemManager.addItem(item);
-		Item item2  = new Item();
-		item.setName("testItem2");
-		itemManager.addItem(item2);
-
+		item.setCreateTime(new Date());
+		item.setDescription("fak");
+		item.setOwner(null);
+		item.setPrice(10.0);
+		item.setPriority(null);
+		item.setQuantity(10);
+		item.setVisit_time(new Date());
+		item.setLastEditTime(new Date());
+		this.itemManager.addItem(item);
 	}
 
 	@Test
 	public void testGetItems() {
-		List<Item> res = itemManager.getItems();
-		for(Item i:res) {
-			System.out.println(i.toString());
-			
-		}
 		
-		assertEquals(2, res.size());
+
+		items = itemManager.getItems();
+		System.out.println("fadfdafadfa");
+		assertEquals(1, items.size());
+				
+
 	}
 
 	
