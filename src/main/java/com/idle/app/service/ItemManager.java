@@ -49,6 +49,13 @@ public class ItemManager {
 		return item;
 	}
 
+	public Item getItemByName(String name){
+		Session currentSession = this.sessionFactory.getCurrentSession();
+		Query query = currentSession.createQuery("from Item where name=:name");
+		Item item = (Item) query.setParameter("name", name).uniqueResult();
+		return item;
+	}
+
 	public void setItems(List<Item> items) {
 		this.items = items;
 	}
