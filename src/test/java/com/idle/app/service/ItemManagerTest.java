@@ -1,16 +1,17 @@
 package com.idle.app.service;
 
-import static org.junit.Assert.fail;
-
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.idle.app.BaseTest;
 import com.idle.app.domain.Item;
+import com.idle.app.domain.User;
 
 public class ItemManagerTest extends BaseTest {
 	private List<Item> items;
@@ -18,10 +19,15 @@ public class ItemManagerTest extends BaseTest {
 	@Resource(name = "itemManager")
 	private ItemManager itemManager;
 
+	@Resource(name="userManager")
+	UserManager userManager;
+	
 	@Before
 	public void setUp() throws Exception {
+		User user = new User();
+		userManager.addUser(user );
+		
 		Item item = new Item();
-
 		item.setName("testItem");
 		item.setCreateTime(new Date());
 		item.setDescription("fak");
@@ -31,6 +37,7 @@ public class ItemManagerTest extends BaseTest {
 		item.setQuantity(10);
 		item.setVisit_time(new Date());
 		item.setLastEditTime(new Date());
+		item.setOwner(user);
 		this.itemManager.addItem(item);
 	}
 
