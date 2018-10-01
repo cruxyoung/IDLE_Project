@@ -1,5 +1,6 @@
 package com.idle.app.web;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,10 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.idle.app.domain.Item;
 import com.idle.app.service.ItemManager;
+
+
 
 @Controller
 @RequestMapping(value="/item/**")
@@ -27,13 +29,23 @@ public class ItemController {
 	public String addItem(HttpServletRequest httpServletRequest) {
 		
 		Item item = new Item();
-		item.setName(
-				httpServletRequest.getParameter("name"));
+		item.setName(httpServletRequest.getParameter("name"));
+		item.setQuantity(Long.valueOf(httpServletRequest.getParameter("quantity")));
+		item.setDescription(httpServletRequest.getParameter("description"));
+		item.setPrice(Double.valueOf(httpServletRequest.getParameter("price")));
+		item.setCreateTime(new Date());
+		item.setLastEditTime(new Date());
 		
 		this.itemManager.addItem(item);
-		
-		return "ok";
+//		redirect to main page(to be implemented)
+		return "redirect:/";
 	}
+	
+	@RequestMapping(value="/add", method=RequestMethod.GET)
+	public String getAddItem() {
+		return "addItem";
+	}
+	
 //	delete
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.POST)
 	public String deleteItem(@PathVariable("id") Long id) {
@@ -53,6 +65,7 @@ public class ItemController {
 		return itm.getName();
 		
 	}
+	
 	
 	
 
