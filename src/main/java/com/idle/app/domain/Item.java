@@ -15,10 +15,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Item")
 public class Item implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	@Column(name="item_id")
 	private long id;
+
 	
 	@Column(name="item_name")
 	private String name;

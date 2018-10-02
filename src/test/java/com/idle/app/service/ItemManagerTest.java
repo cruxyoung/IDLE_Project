@@ -1,5 +1,7 @@
 package com.idle.app.service;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import org.junit.Test;
 import com.idle.app.BaseTest;
 import com.idle.app.domain.Item;
 import com.idle.app.domain.User;
+import org.junit.*;
 
 public class ItemManagerTest extends BaseTest {
 	private List<Item> items;

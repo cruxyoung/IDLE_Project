@@ -12,10 +12,15 @@ import javax.persistence.Table;
 @Entity
 @Table(name="user")
 public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	@Column(name="user_id")
-	private long userId;
+	private Long userId;
 	
 	@Column(name="user_name")
 	private String userName;
@@ -38,7 +43,7 @@ public class User implements Serializable{
 	@Column(name="last_edit_time")
     private Date lastEditTime;
 
-	public long getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
