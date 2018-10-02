@@ -37,7 +37,7 @@ public class DatabaseUserManagerTest extends BaseTest {
 	}
 
 	@Test
-	@Ignore
+//	@Ignore
 	public void testAddUser() {
 		// DatabaseUserManager databaseUserManager = new DatabaseUserManager();
 
