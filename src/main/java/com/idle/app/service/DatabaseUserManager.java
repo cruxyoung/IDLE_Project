@@ -115,7 +115,7 @@ public class DatabaseUserManager implements UserManager {
 		try {
 			Query query = this.sessionFactory.getCurrentSession().createQuery("from User u where u.userName=?");
 			query.setString(0, username);
-			List list = query.list();
+			List<?> list = query.list();
 			if (list.isEmpty()) {
 				return ServerResponse.createBySuccess();
 			} else {

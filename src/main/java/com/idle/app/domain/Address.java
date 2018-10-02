@@ -5,8 +5,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -36,12 +39,24 @@ public class Address implements Serializable{
 	
 	@Column(name="last_edit_time")
     private Date lastEditTime;
+	
+	public User getUser() {
+		return user;
+	}
 
-	public long getAddressId() {
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
+    private User user;
+	
+	public Long getAddressId() {
 		return addressId;
 	}
 
-	public void setAddressId(long addressId) {
+	public void setAddressId(Long addressId) {
 		this.addressId = addressId;
 	}
 
