@@ -29,12 +29,17 @@ public class ItemController {
 	public String addItem(HttpServletRequest httpServletRequest) {
 		
 		Item item = new Item();
+		
 		item.setName(httpServletRequest.getParameter("name"));
 		item.setQuantity(Long.valueOf(httpServletRequest.getParameter("quantity")));
 		item.setDescription(httpServletRequest.getParameter("description"));
 		item.setPrice(Double.valueOf(httpServletRequest.getParameter("price")));
 		item.setCreateTime(new Date());
 		item.setLastEditTime(new Date());
+
+		if(item.getName().length()==0) item.setName("default"+ new Date().toString());
+		
+		
 		
 		this.itemManager.addItem(item);
 //		redirect to main page(to be implemented)

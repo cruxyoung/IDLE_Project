@@ -21,17 +21,17 @@
 		<form action="item/add" method="POST">
 			<div class="form-group">
 				<label for="item_name">Item Name</label> 
-				<input name="name"
+				<input name="name" value=""
 					type="name" class="form-control" id="item_name"
 					placeholder="Enter name"> 
 				<label for="item_quantity">Item quantity</label> 
-				<input name="quantity" class="form-control"
+				<input name="quantity" type="number" value="0" class="form-control"
 					id="item_quantity" placeholder="0"> 
 				<label for="item_description">Item description</label> 
-				<textarea name="description" class="form-control" id="item_description"
+				<textarea name="description" value="" class="form-control" id="item_description"
 					placeholder="Item description..." row="5"></textarea>
 				<label for="item_price">Item price</label>
-				<input name="price" class="form-control" id="item_price" placeholder="10">
+				<input name="price" type="number" value="0" class="form-control" id="item_price" placeholder="10">
 				<label for="item_photo"> Item photo(to be imple)</label>
 				
 				

@@ -23,7 +23,7 @@ public class Item implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="item_id")
-	private long id;
+	private Long id;
 
 	
 	@Column(name="item_name")

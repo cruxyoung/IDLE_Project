@@ -34,7 +34,7 @@ public class ItemManagerTest extends BaseTest {
 		item.setName("testItem");
 		item.setCreateTime(new Date());
 		item.setDescription("fak");
-		item.setOwner(null);
+		item.setOwner(user);
 		item.setPrice(10.0);
 		item.setPriority(null);
 		item.setQuantity(10);
