@@ -5,7 +5,7 @@
 <title>Home</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>Insert title here</title>
+<title>Home Page</title>
 <link href="<c:url value="/resources/css/bootstrap.css" />"
 	rel="stylesheet" type="text/css" />
 
