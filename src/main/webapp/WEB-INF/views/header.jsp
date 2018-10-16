@@ -4,7 +4,7 @@
         <a class="p-2 text-dark" href="/app/">Home</a>
         <a class="p-2 text-dark" href="/app/item/add">Publish Item</a>
         <a class="p-2 text-dark" href="#">Personal Center</a>
-        <a class="p-2 text-dark" href="/app/login">Login</a>
+        <a class="p-2 text-dark" href="/app/user/login">Log In</a>
       </nav>
-      <a class="btn btn-outline-primary" href="#">Sign up</a>
+      <a class="btn btn-outline-primary" href="/app/user/register">Sign Up</a>
     </div>

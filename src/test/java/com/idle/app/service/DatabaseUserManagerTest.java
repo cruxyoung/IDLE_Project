@@ -45,9 +45,9 @@ public class DatabaseUserManagerTest extends BaseTest {
 		user.setBalance(100.0);
 		user.setCreateTime(new Date());
 		user.setLastEditTime(new Date());
-		user.setEmail("321new@qq.com");
+		user.setEmail("321@qq.com");
 		user.setPassword("123");
-		user.setUserName("bukenengchongfu");
+		user.setUserName("chongfu");
 		user.setPhone("1234333566");
 		ServerResponse<String> re = this.userManager.addUser(user);
 		System.out.println(re.getMsg());
