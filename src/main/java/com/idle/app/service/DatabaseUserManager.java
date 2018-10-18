@@ -175,12 +175,13 @@ public class DatabaseUserManager implements UserManager {
 		if (res.getStatus() == 0)
 			return ServerResponse.createByErrorMessage("Username is wrong!");
 		else {
-			
+
 			try {
-				Query query = this.sessionFactory.getCurrentSession().createQuery("from User u where u.userName=? and u.password=?");
+				Query query = this.sessionFactory.getCurrentSession()
+						.createQuery("from User u where u.userName=? and u.password=?");
 				query.setString(0, username);
 				query.setString(1, password);
-				List <User>list = query.list();
+				List<User> list = query.list();
 				if (list.isEmpty()) {
 					return ServerResponse.createByErrorMessage("Fail to login, your password is wrong!");
 				} else {
@@ -199,6 +200,9 @@ public class DatabaseUserManager implements UserManager {
 		Session currentSession = this.sessionFactory.getCurrentSession();
 
 		User user = (User) currentSession.get(User.class, userId);
+		if (user == null) {
+			return ServerResponse.createByErrorMessage("Cannot find the user! Please Reload!");
+		}
 		return ServerResponse.createBySuccess("Get the user successfully!", user);
 	}
 

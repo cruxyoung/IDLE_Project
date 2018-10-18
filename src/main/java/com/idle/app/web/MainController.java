@@ -31,5 +31,10 @@ public class MainController {
 		
 
 		return "register";
+	} 
+	
+	@RequestMapping(value = "personalcenter", method = RequestMethod.GET)
+	public String personalcenter(Locale locale, Model model) {
+		return "personalinfo";
 	}  
 }
