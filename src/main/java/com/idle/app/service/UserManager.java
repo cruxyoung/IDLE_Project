@@ -13,7 +13,7 @@ public interface UserManager extends Serializable{
 	ServerResponse<String> checkEmail(String email);
 	ServerResponse<String> updateUser(User user);
 	ServerResponse<String> deleteUser(Long userId);
-	
+	ServerResponse<User> login(String username, String password);
 	
 	
 }

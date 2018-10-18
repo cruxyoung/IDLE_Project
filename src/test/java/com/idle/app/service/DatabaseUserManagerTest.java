@@ -1,13 +1,10 @@
 package com.idle.app.service;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Date;
-
-import javax.annotation.Resource;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.idle.app.BaseTest;
 import com.idle.app.common.ServerResponse;
@@ -15,8 +12,11 @@ import com.idle.app.domain.User;
 
 public class DatabaseUserManagerTest extends BaseTest {
 
-	@Resource(name = "userManager")
-	UserManager userManager;
+	@Autowired
+	private UserManager userManager;
+	
+//	@Resource(name = "userManager")
+//	UserManager userManager;
 
 	@Test
 	@Ignore
@@ -27,7 +27,7 @@ public class DatabaseUserManagerTest extends BaseTest {
 		user.setBalance(100.0);
 		user.setCreateTime(new Date());
 		user.setLastEditTime(new Date());
-		user.setEmail("2new@qq.com");
+		user.setEmail("xili@qq.com");
 		user.setPassword("123");
 		user.setUserName("testnew");
 		user.setPhone("12345");
@@ -37,7 +37,7 @@ public class DatabaseUserManagerTest extends BaseTest {
 	}
 
 	@Test
-//	@Ignore
+	@Ignore
 	public void testAddUser() {
 		// DatabaseUserManager databaseUserManager = new DatabaseUserManager();
 
@@ -45,9 +45,9 @@ public class DatabaseUserManagerTest extends BaseTest {
 		user.setBalance(100.0);
 		user.setCreateTime(new Date());
 		user.setLastEditTime(new Date());
-		user.setEmail("321@qq.com");
+		user.setEmail("xili@qq.com");
 		user.setPassword("123");
-		user.setUserName("chongfu");
+		user.setUserName("lixinnn");
 		user.setPhone("1234333566");
 		ServerResponse<String> re = this.userManager.addUser(user);
 		System.out.println(re.getMsg());
@@ -79,10 +79,18 @@ public class DatabaseUserManagerTest extends BaseTest {
 	}
 
 	@Test
-//	@Ignore
+	@Ignore
 	public void testCheckEmail() {
 		String email = "3new@qq.com";
 		ServerResponse<String> re = this.userManager.checkEmail(email);
 		System.out.println(re.getMsg() + " " + re.getStatus());
+	}
+	
+	@Test
+	public void testLogin() {
+		String username = "test3";
+		String password = "123";
+		ServerResponse<?> re = this.userManager.login(username, password);
+		System.out.println(re.getMsg()+ " " + re.getStatus());
 	}
 }
