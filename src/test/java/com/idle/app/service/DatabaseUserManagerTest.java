@@ -87,10 +87,19 @@ public class DatabaseUserManagerTest extends BaseTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testLogin() {
 		String username = "test3";
 		String password = "123";
 		ServerResponse<?> re = this.userManager.login(username, password);
+		System.out.println(re.getMsg()+ " " + re.getStatus());
+	}
+	
+	@Test
+	public void testGetUserByUserId() {
+		Long userId = 1L;
+		ServerResponse<User> re = this.userManager.getUserByUserId(userId);
+		System.out.println(re.getData().getUserName());
 		System.out.println(re.getMsg()+ " " + re.getStatus());
 	}
 }

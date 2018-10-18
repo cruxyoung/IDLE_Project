@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.idle.app.common.ServerResponse;
+import com.idle.app.domain.Item;
 import com.idle.app.domain.User;
 
 @Service(value = "userManager")
@@ -191,6 +192,14 @@ public class DatabaseUserManager implements UserManager {
 				return ServerResponse.createByError();
 			}
 		}
+	}
+
+	@Override
+	public ServerResponse<User> getUserByUserId(Long userId) {
+		Session currentSession = this.sessionFactory.getCurrentSession();
+
+		User user = (User) currentSession.get(User.class, userId);
+		return ServerResponse.createBySuccess("Get the user successfully!", user);
 	}
 
 }
