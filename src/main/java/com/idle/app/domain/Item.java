@@ -47,7 +47,7 @@ public class Item implements Serializable {
 	@Column(name="item_priority")
 	private Integer priority;
 	// wait a secon
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne()
     @JoinColumn(name="owner_id")
     private User owner;
 

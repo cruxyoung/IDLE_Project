@@ -33,7 +33,7 @@
 
 <li><h3>item name: <c:out value='${item.name}'/></h3></li>
 <li><h3>item description: <c:out value='${item.description}'/></h3>  </li>
-<li><h3>item owner: <c:out value='${item.owner.name}'/></h3>  </li>
+<li><h3>item owner: <c:out value='${item.owner.getUserName()}'/></h3>  </li>
 <li><h3>item quantity: <c:out value='${item.quantity}'/></h3>  </li>
 </ul>
 
