@@ -9,7 +9,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.idle.app.domain.Item;
+import com.idle.app.domain.User;
 import com.idle.app.service.ItemManager;
+import com.idle.app.service.UserManager;
 
 @Controller
 @RequestMapping(value = "/item/**")
@@ -27,13 +31,19 @@ public class ItemController {
 
 	@Resource(name = "itemManager")
 	private ItemManager itemManager;
+	
+	@Autowired
+	private UserManager userManager;
 
 	// create
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-	public String addItem(HttpServletRequest httpServletRequest,@RequestParam("file") MultipartFile file) {
+	public String addItem(HttpServletRequest httpServletRequest,  @RequestParam("file") MultipartFile file) {
 		
 		Item item = new Item();
-		
+		HttpSession session = httpServletRequest.getSession();
+		User owner = userManager.getUserByUserId((Long)session.getAttribute("userId")).getData();
+		if(owner!=null)
+			item.setOwner(owner);
 		item.setName(httpServletRequest.getParameter("name"));
 		item.setQuantity(Long.valueOf(httpServletRequest.getParameter("quantity")));
 		item.setDescription(httpServletRequest.getParameter("description"));
