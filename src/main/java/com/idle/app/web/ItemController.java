@@ -112,11 +112,14 @@ public class ItemController {
 
 	// read
 	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-	public String getItem(@PathVariable("id") Long id, Model model) {
+	public String getItem(@PathVariable("id") Long id, HttpSession session ,Model model ) {
 		Map<String, String> res = new HashMap();
 		Item item = this.itemManager.getItemById(id);
 		// res.put("id", new Long(itm.getId()).toString());
 		// res.put("name", itm.getName());
+		if(item!=null)
+			session.setAttribute("itemId", id);
+		
 		model.addAttribute("item", item);
 		if (item == null)
 			System.out.println("get no itm");
