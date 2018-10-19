@@ -4,7 +4,7 @@
       
     </div>
     <div class="col-sm">
-      <form action="item/add" method="POST">
+      <form action="item/add?${_csrf.parameterName}=${_csrf.token}" method="POST" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="item_name">Item Name</label> 
 				<input name="name" value=""
@@ -19,7 +19,7 @@
 				<label for="item_price">Item price</label>
 				<input name="price" type="number" value="0" class="form-control" id="item_price" placeholder="10">
 				<label for="item_photo"> Item photo(to be imple)</label>
-				
+				<input type="file" name="file"><br /> 
 				
 
 			</div>

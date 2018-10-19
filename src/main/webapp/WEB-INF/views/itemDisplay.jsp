@@ -7,8 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>item</title>
-<link href="<c:url value="/resources/css/bootstrap.css" />"
-	rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -26,7 +25,7 @@
 <div class="row">
 <div class="col-6 col-md"></div>
 <div class="col-6 col-md">
-<img class="mb-2" src="<c:url value="/resources/placeholder.png"/>" alt="">
+<img class="mb-2" src="<c:out value='${item.photo}'/>" alt="" height="300px" width="300px">
 
 </div>
 <div class="col-6 col-md">
