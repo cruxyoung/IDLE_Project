@@ -17,23 +17,29 @@
 <div class="container-fluid">
 <div class="row">
 <div class="col-6 col-md"></div>
-<div class="col-6 col-md"></div>
+<!-- <div class="col-6 col-md"></div> -->
 <div class="col-6 col-md">
-<form class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+<form class="form-signin" action="login.do" method="POST">
+        <h2 class="form-signin-heading">Please Sign In</h2>
+        <br/>
+        <label for="username" class="sr-only">User name</label>
+        <input name="username" type="text" id="username" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <br/>
+        <input name="password" type="password" id="password" class="form-control" placeholder="Password" required>
+        <br/>
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
+        <br/>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <br/>
+        <a class="btn btn-outline-primary" href="/app/user/register" style="display:block;text-align:center">Create a New Account.</a>
       </form>
       </div>
-<div class="col-6 col-md"></div>
+<!-- <div class="col-6 col-md"></div> -->
 <div class="col-6 col-md"></div>
 </div>
 </div>
@@ -55,3 +61,12 @@
 </body>
 
 </html>
+
+<script> 
+
+//取出传回来的参数error并与yes比较
+  var errori ='<%=request.getParameter("error")%>';
+  if(errori=='yes'){
+   alert("Wrong username or password!");
+  }
+</script>

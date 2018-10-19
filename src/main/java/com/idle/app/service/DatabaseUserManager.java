@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.idle.app.common.ServerResponse;
+import com.idle.app.domain.Item;
 import com.idle.app.domain.User;
 
 @Service(value = "userManager")
@@ -115,7 +116,7 @@ public class DatabaseUserManager implements UserManager {
 		try {
 			Query query = this.sessionFactory.getCurrentSession().createQuery("from User u where u.userName=?");
 			query.setString(0, username);
-			List list = query.list();
+			List<?> list = query.list();
 			if (list.isEmpty()) {
 				return ServerResponse.createBySuccess();
 			} else {
@@ -154,9 +155,9 @@ public class DatabaseUserManager implements UserManager {
 	@Transactional
 	public ServerResponse<String> deleteUser(Long userId) {
 		try {
-			//todo delete user
-			
-		}catch (TransactionException e) {
+			// todo delete user
+
+		} catch (TransactionException e) {
 			throw new RuntimeException("delete user error:" + e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -165,6 +166,40 @@ public class DatabaseUserManager implements UserManager {
 
 		}
 		return null;
+	}
+
+	@Override
+	public ServerResponse<User> login(String username, String password) {
+		// check user name
+		ServerResponse<String> res = checkUsername(username);
+		if (res.getStatus() == 0)
+			return ServerResponse.createByErrorMessage("Username is wrong!");
+		else {
+			
+			try {
+				Query query = this.sessionFactory.getCurrentSession().createQuery("from User u where u.userName=? and u.password=?");
+				query.setString(0, username);
+				query.setString(1, password);
+				List <User>list = query.list();
+				if (list.isEmpty()) {
+					return ServerResponse.createByErrorMessage("Fail to login, your password is wrong!");
+				} else {
+					return ServerResponse.createBySuccess("Log in successfully!", list.get(0));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e.toString());
+				return ServerResponse.createByError();
+			}
+		}
+	}
+
+	@Override
+	public ServerResponse<User> getUserByUserId(Long userId) {
+		Session currentSession = this.sessionFactory.getCurrentSession();
+
+		User user = (User) currentSession.get(User.class, userId);
+		return ServerResponse.createBySuccess("Get the user successfully!", user);
 	}
 
 }

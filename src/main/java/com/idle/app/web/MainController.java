@@ -17,11 +17,19 @@ public class MainController {
 	}  
 	
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "user/login", method = RequestMethod.GET)
 	public String login(Locale locale, Model model) {
 
 		
 
 		return "login";
+	}  
+	
+	@RequestMapping(value = "user/register", method = RequestMethod.GET)
+	public String register(Locale locale, Model model) {
+
+		
+
+		return "register";
 	}  
 }
