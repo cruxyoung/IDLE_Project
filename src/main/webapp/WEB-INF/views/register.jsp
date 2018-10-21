@@ -74,7 +74,6 @@
 
 <script> 
 
-//取出传回来的参数error并与yes比较
   var errori ='<%=request.getParameter("error")%>';
   if(errori=='wrongPassword'){
    alert("Two passwords you input are not same, Please try again!");

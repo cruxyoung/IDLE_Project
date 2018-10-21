@@ -39,8 +39,7 @@
 </ul>
 
 
-<form class="form-signin" action="register.do" method="POST">
-        <!-- <h2 class="form-signin-heading">Please Input Information</h2> -->
+<form class="form-signin" action="modifyuserinfo.do" method="POST">
         <br/>
         
         <label for="username">User name</label>
@@ -86,9 +85,12 @@
 
 <script> 
 
-//取出传回来的参数error并与yes比较
   var errori ='<%=request.getParameter("error")%>';
-  if(errori=='yes'){
-   alert("Wrong username or password!");
+  var updateResult ='<%=request.getParameter("updateresult")%>';
+  if(errori=='wrongPassword'){
+   alert("Two passwords you input are not same, Please try again!");
+  }
+  if(updateResult != 'null'){
+	  alert(updateResult);
   }
 </script>

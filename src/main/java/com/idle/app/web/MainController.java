@@ -46,21 +46,4 @@ public class MainController {
 		return "register";
 	} 
 	
-	@RequestMapping(value = "personalcenter", method = RequestMethod.GET)
-	public String personalcenter(Locale locale, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-		HttpSession session = httpServletRequest.getSession();
-		Long userId = (Long) session.getAttribute("userId");
-		if(userId == null) {
-			try {
-				httpServletResponse.sendRedirect("user/login?error=notlogin");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
-		ServerResponse<User> re = this.userManager.getUserByUserId(userId);
-		model.addAttribute("user",re.getData());
-		return "personalinfo";
-	}  
 }

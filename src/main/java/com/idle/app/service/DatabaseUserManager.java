@@ -69,15 +69,21 @@ public class DatabaseUserManager implements UserManager {
 			if (user == null || user.getUserId() == null) {
 				return ServerResponse.createByErrorMessage("Cannot find this user, Try again!");
 			}
+			User originalUser = getUserByUserId(user.getUserId()).getData();
+			
 			// check user name
-			ServerResponse<String> res = checkUsername(user.getUserName());
-			if (res.getStatus() != 0)
-				return res;
-
+			if(!originalUser.getUserName().equals(user.getUserName())) {
+				ServerResponse<String> res = checkUsername(user.getUserName());
+				if (res.getStatus() != 0)
+					return res;
+			}
+			
 			// check email
-			res = checkEmail(user.getEmail());
-			if (res.getStatus() != 0)
-				return res;
+			if(!originalUser.getEmail().equals(user.getEmail())) {
+				ServerResponse<String> res = checkEmail(user.getEmail());
+				if (res.getStatus() != 0)
+					return res;
+			}
 
 			Session session = sessionFactory.getCurrentSession();
 			// session.beginTransaction();
