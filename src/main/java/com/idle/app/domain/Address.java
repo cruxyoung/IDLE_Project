@@ -3,14 +3,15 @@ package com.idle.app.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="address")
@@ -40,6 +41,10 @@ public class Address implements Serializable{
 	@Column(name="last_edit_time")
     private Date lastEditTime;
 	
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="user_id")
+    private User user;
+	
 	public User getUser() {
 		return user;
 	}
@@ -47,10 +52,6 @@ public class Address implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="user_id")
-    private User user;
 	
 	public Long getAddressId() {
 		return addressId;

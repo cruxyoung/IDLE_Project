@@ -3,6 +3,7 @@ package com.idle.app.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,7 +48,7 @@ public class Item implements Serializable {
 	@Column(name="item_priority")
 	private Integer priority;
 	// wait a secon
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="owner_id")
     private User owner;
 
