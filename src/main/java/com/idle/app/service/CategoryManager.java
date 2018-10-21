@@ -49,6 +49,8 @@ public class CategoryManager {
 		Category cate = (Category) query.setParameter("categoryName", cateName).uniqueResult();
 		return cate;
 	}
+	
+	
 
 	
 }

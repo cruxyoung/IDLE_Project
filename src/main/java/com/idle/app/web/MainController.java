@@ -13,25 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.idle.app.domain.Category;
 import com.idle.app.service.CategoryManager;
+import com.idle.app.service.ItemManager;
 @Controller
 public class MainController {
 //	initialize category data
 	@Autowired
 	public CategoryManager categoryManager;
 	
-	@PostConstruct
-	public void init() {
-	     String[] cates = {"Antiques","Baby","Boats","Books","Cars","Clothing","Community","Electronics","Home","Jobs","Others"};
-	     for(String s:cates) {
-	    	 Category category = new Category();
-	    	 category.setCategoryName(s);
-	    	 this.categoryManager.addCategory(category);
-	     }
-	}
-	@PreDestroy
-	public void cleanUp(){
-		this.categoryManager.deleteAllCategory("Category");
-	}
 	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)

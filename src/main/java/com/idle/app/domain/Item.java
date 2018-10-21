@@ -2,13 +2,16 @@ package com.idle.app.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,6 +31,9 @@ public class Item implements Serializable {
 	@Column(name="item_name")
 	private String name;
 
+	@OneToMany(mappedBy="item",cascade=CascadeType.ALL)
+	List<Comment> comments;
+	
 	@Column(name="item_photo")
 	private String photo;
 
@@ -50,7 +56,7 @@ public class Item implements Serializable {
     @JoinColumn(name="owner_id")
     private User owner;
 
-	@ManyToOne()
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="catetory_id")
 	private Category category;
 

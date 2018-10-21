@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.idle.app.domain.Category;
+import com.idle.app.domain.Comment;
 import com.idle.app.domain.Item;
 import com.idle.app.domain.User;
 import com.idle.app.service.CategoryManager;
+import com.idle.app.service.CommentManager;
 import com.idle.app.service.ItemManager;
 import com.idle.app.service.UserManager;
 
@@ -40,6 +42,8 @@ public class ItemController {
 	
 	@Autowired
 	private CategoryManager categoryManager;
+	@Autowired
+	private CommentManager commentManager;
 
 	// create
 	@RequestMapping(value="/add", method=RequestMethod.POST)
@@ -130,10 +134,23 @@ public class ItemController {
 			session.setAttribute("itemId", id);
 		
 		model.addAttribute("item", item);
+		List<Comment> comments = commentManager.getCommentsByItem(item).getData();
+		model.addAttribute("comments", comments);
 		if (item == null)
 			System.out.println("get no itm");
 		return "itemDisplay";
 
+	}
+	
+	@RequestMapping(value="/comment/add", method= RequestMethod.POST)
+	public String addComment(HttpServletRequest httpServletRequest,HttpSession session) {
+		Long itemId = (Long)session.getAttribute("itemId");
+		Item item = itemManager.getItemById(itemId);
+		String content = httpServletRequest.getParameter("content");
+		User user = userManager.getUserByUserId((Long)session.getAttribute("userId")).getData();
+		commentManager.addComments(content, item, user);
+		return "redirect:/item/get/"+itemId.toString();
+		
 	}
 
 }

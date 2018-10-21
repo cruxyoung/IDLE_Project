@@ -50,7 +50,7 @@
 
 </div>
 
-
+<jsp:include page="commentArea.jsp" flush="true"/>
 
 
 <div class="container-fluid">
