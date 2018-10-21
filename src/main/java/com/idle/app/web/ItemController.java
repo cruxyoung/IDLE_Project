@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -20,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.idle.app.domain.Category;
 import com.idle.app.domain.Item;
 import com.idle.app.domain.User;
+import com.idle.app.service.CategoryManager;
 import com.idle.app.service.ItemManager;
 import com.idle.app.service.UserManager;
 
@@ -34,6 +37,9 @@ public class ItemController {
 	
 	@Autowired
 	private UserManager userManager;
+	
+	@Autowired
+	private CategoryManager categoryManager;
 
 	// create
 	@RequestMapping(value="/add", method=RequestMethod.POST)
@@ -44,12 +50,16 @@ public class ItemController {
 		User owner = userManager.getUserByUserId((Long)session.getAttribute("userId")).getData();
 		if(owner!=null)
 			item.setOwner(owner);
+		
+		Category cate = categoryManager.getCateByName(httpServletRequest.getParameter("category"));
+		item.setCategory(cate);
 		item.setName(httpServletRequest.getParameter("name"));
 		item.setQuantity(Long.valueOf(httpServletRequest.getParameter("quantity")));
 		item.setDescription(httpServletRequest.getParameter("description"));
 		item.setPrice(Double.valueOf(httpServletRequest.getParameter("price")));
 		item.setCreateTime(new Date());
 		item.setLastEditTime(new Date());
+		
 
 		if(item.getName().length()==0) item.setName("default"+ new Date().toString());
 		String name = item.getName();
@@ -72,18 +82,15 @@ public class ItemController {
 					
 				// Create the file on server
 				File serverFile = new File(saveDirectory+name+".png");
-//				System.out.println(dir.getAbsolutePath()
-//						+ File.separator + name);
+
 				BufferedOutputStream stream = new BufferedOutputStream(
 						new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
 				item.setPhoto("/app/resources/images/"+name+".png");
 
-//				return "You successfully uploaded file=" + name;
 			} catch (Exception e) {
 				e.printStackTrace();
-//				return "You failed to upload " + name + " => " + e.getMessage();
 			}
 		} else {
 			System.out.println("You failed to upload " + name
@@ -98,7 +105,9 @@ public class ItemController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String getAddItem() {
+	public String getAddItem(Model model) {
+		List<Category> cates = categoryManager.getCategories();
+		model.addAttribute("cates",cates);
 		return "addItem";
 	}
 

@@ -35,6 +35,7 @@
 <li><h3>item description: <c:out value='${item.description}'/></h3>  </li>
 <li><h3>item owner: <c:out value='${item.owner.getUserName()}'/></h3>  </li>
 <li><h3>item quantity: <c:out value='${item.quantity}'/></h3>  </li>
+<li><h3>item Category: <c:out value='${item.category.categoryName}'/></h3>
 </ul>
 
 <input class="btn btn-primary" type="button" value="Buy it now!">

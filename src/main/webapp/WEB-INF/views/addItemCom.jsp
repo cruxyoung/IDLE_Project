@@ -1,3 +1,4 @@
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <div class="container-fluid">
 <div class="row">
     <div class="col-sm">
@@ -21,10 +22,16 @@
 				<label for="item_photo"> Item photo(to be imple)</label>
 				<input type="file" name="file"><br /> 
 				
+				<select name="category">
+				  <c:forEach items="${cates}" var="cate">
+				  	<option value = "${cate.categoryName}">${cate.categoryName}</option> 
+				  </c:forEach>
+				</select>
 
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
+		
     </div>
     <div class="col-sm">
       

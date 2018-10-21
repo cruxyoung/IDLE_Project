@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -51,9 +50,9 @@ public class Item implements Serializable {
     @JoinColumn(name="owner_id")
     private User owner;
 
-
-//	@Column(name="catetory_id")
-//	private Long catetoryId;
+	@ManyToOne()
+	@JoinColumn(name="catetory_id")
+	private Category category;
 
 	@Column(name="create_time")
     private Date createTime;
@@ -144,6 +143,15 @@ public class Item implements Serializable {
 	public Long getId() {
 		return id;
 	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
 	
 	
 }
