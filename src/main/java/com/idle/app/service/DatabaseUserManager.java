@@ -87,13 +87,14 @@ public class DatabaseUserManager implements UserManager {
 
 			Session session = sessionFactory.getCurrentSession();
 			// session.beginTransaction();
-			String hql = "update User u set u.userName=?, u.email=?, u.phone=?, u.lastEditTime=? where u.userId=?";
+			String hql = "update User u set u.userName=?, u.email=?, u.phone=?, u.lastEditTime=?, u.password=? where u.userId=?";
 			Query query = session.createQuery(hql);
 			query.setParameter(0, user.getUserName());
 			query.setParameter(1, user.getEmail());
 			query.setParameter(2, user.getPhone());
 			query.setParameter(3, new Date());
-			query.setParameter(4, user.getUserId());
+			query.setParameter(4, user.getPassword());
+			query.setParameter(5, user.getUserId());
 			query.executeUpdate();
 			// session.getTransaction().commit();
 			return ServerResponse.createBySuccessMessage("Update Information successfully!");
@@ -210,6 +211,23 @@ public class DatabaseUserManager implements UserManager {
 			return ServerResponse.createByErrorMessage("Cannot find the user! Please Reload!");
 		}
 		return ServerResponse.createBySuccess("Get the user successfully!", user);
+	}
+
+	@Override
+	public ServerResponse<String> updateBalance(User user) {
+		if (user == null || user.getUserId() == null) {
+			return ServerResponse.createByErrorMessage("Cannot find this user, Try again!");
+		}
+		User originalUser = getUserByUserId(user.getUserId()).getData();
+		Session session = sessionFactory.getCurrentSession();
+		// session.beginTransaction();
+		String hql = "update User u set u.balance=? where u.userId=?";
+		Query query = session.createQuery(hql);
+		query.setParameter(0, user.getBalance() + originalUser.getBalance());
+		query.setParameter(1, user.getUserId());
+		query.executeUpdate();
+		// session.getTransaction().commit();
+		return ServerResponse.createBySuccessMessage("Top Up successfully!");
 	}
 
 }

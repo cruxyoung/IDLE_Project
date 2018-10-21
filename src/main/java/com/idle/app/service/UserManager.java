@@ -15,6 +15,6 @@ public interface UserManager extends Serializable{
 	ServerResponse<String> deleteUser(Long userId);
 	ServerResponse<User> login(String username, String password);
 	ServerResponse<User> getUserByUserId(Long userId);
-	
+	ServerResponse<String> updateBalance(User user);
 	
 }

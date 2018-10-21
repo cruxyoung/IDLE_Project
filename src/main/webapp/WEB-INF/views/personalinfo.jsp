@@ -39,7 +39,7 @@
 </ul>
 
 
-<form class="form-signin" action="modifyuserinfo.do" method="POST">
+<form class="form-modifyuser" action="modifyuserinfo.do" method="POST">
         <br/>
         
         <label for="username">User name</label>
@@ -55,17 +55,27 @@
         <br/>
         
         <label for="inputPassword"> New Password (Do not have to set new password!)</label>
-        <input name="password" type="password" id="password" class="form-control" placeholder="Enter Password" required>
+        <input name="password" type="password" id="password" class="form-control" placeholder="Enter Password" value='${user.password}' required>
         <br/>
         
         <label for="confirmPassword">Confirm New Password</label>
-        <input name="confirmpassword" type="password" id="confirmpassword" class="form-control" placeholder="Re-enter Password" required>
+        <input name="confirmpassword" type="password" id="confirmpassword" class="form-control" placeholder="Re-enter Password" value='${user.password}' required>
         <br/>
         
         <br/>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Modify</button>
 </form>
 
+<div class="col-6">
+<form class="form-topup" action="topup.do" method="POST">
+	<br/>
+    <label for="originalbalance">Your Balance: ${user.balance}</label>
+    <br/><br/>
+    <input name="balance" type="text" id="balance" class="form-control" placeholder="Enter the how much you want to charge..." required autofocus>
+    <br/>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Top Up</button>
+</form>
+</div>
         
 </div>
 
@@ -89,6 +99,9 @@
   var updateResult ='<%=request.getParameter("updateresult")%>';
   if(errori=='wrongPassword'){
    alert("Two passwords you input are not same, Please try again!");
+  }
+  if(errori=='balanceWrong'){
+	  alert("Balance you input should be numberic!");
   }
   if(updateResult != 'null'){
 	  alert(updateResult);
