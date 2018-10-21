@@ -40,45 +40,46 @@
 
 
 <form class="form-signin" action="register.do" method="POST">
-        <h2 class="form-signin-heading">Please Input Information</h2>
+        <!-- <h2 class="form-signin-heading">Please Input Information</h2> -->
         <br/>
         
         <label for="username">User name</label>
-        <input name="username" type="text" id="username" class="form-control" placeholder="Enter username" required autofocus>
-        <br/>
-        
-        <label for="inputPassword">Password</label>
-        <input name="password" type="password" id="password" class="form-control" placeholder="Enter Password" required>
-        <br/>
-        
-        <label for="confirmPassword">Confirm Password</label>
-        <input name="confirmpassword" type="password" id="confirmpassword" class="form-control" placeholder="Re-enter Password" required>
+        <input name="username" type="text" id="username" class="form-control" value='${user.userName}' required autofocus>
         <br/>
         
         <label for="email">Email</label>
-        <input name="email" type="email" id="email" class="form-control" placeholder="Enter email" required autofocus>
+        <input name="email" type="email" id="email" class="form-control"  value='${user.email}' required autofocus>
         <br/>
         
         <label for="phone">Phone</label>
-        <input name="phone" type="text" id="phone" class="form-control" placeholder="Enter phone number" required autofocus>
+        <input name="phone" type="text" id="phone" class="form-control"  value='${user.phone}' required autofocus>
+        <br/>
+        
+        <label for="inputPassword"> New Password (Do not have to set new password!)</label>
+        <input name="password" type="password" id="password" class="form-control" placeholder="Enter Password" required>
+        <br/>
+        
+        <label for="confirmPassword">Confirm New Password</label>
+        <input name="confirmpassword" type="password" id="confirmpassword" class="form-control" placeholder="Re-enter Password" required>
         <br/>
         
         <br/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
-        <br/>
-        <a class="btn btn-outline-primary" href="/app/user/login" style="display:block;text-align:center">Already has account? Log in.</a>
-      </form>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Modify</button>
+</form>
+
+        
 </div>
 
 <div class="col"></div>
 </div>
-</div>
+
 
 <div class="container-fluid">
 	<jsp:include page="footer.jsp" flush="true"/>
 	
 </div>
 
+</div>
 </body>
 
 </html>

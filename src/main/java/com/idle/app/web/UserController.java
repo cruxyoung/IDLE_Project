@@ -52,6 +52,7 @@ public class UserController {
 	public String signout(HttpServletRequest httpServletRequest) {
 		HttpSession session = httpServletRequest.getSession();
 		session.removeAttribute("username");
+		session.removeAttribute("userId");
 		return "main";
 	}
 	
@@ -82,7 +83,12 @@ public class UserController {
 		
 		ServerResponse<String> response = userManager.addUser(user);
 		if(response.getStatus() == 0) {
-			return "login";
+			try {
+				httpServletResponse.sendRedirect("login?SignUpresult="+response.getStatus());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else {
 			try {
 				httpServletResponse.sendRedirect("register?error="+response.getMsg());
