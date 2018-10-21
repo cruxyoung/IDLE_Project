@@ -152,5 +152,15 @@ public class ItemController {
 		return "redirect:/item/get/"+itemId.toString();
 		
 	}
+	@RequestMapping(value="/get/comment/delete/{id}", method= RequestMethod.GET)
+	public String deleteComment(@PathVariable("id") Long id, HttpSession session) {
+		commentManager.deleteComment(id);
+		Long itemId = (Long)session.getAttribute("itemId");
+		return "redirect:/item/get/"+itemId.toString();
+	}
+	
+	
+	
+	
 
 }

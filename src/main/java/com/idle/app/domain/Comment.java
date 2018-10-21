@@ -25,11 +25,11 @@ public class Comment implements Serializable {
 	@Column(name="comment_content")
 	private String content;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(name="item_id")
 	private Item item;
 	

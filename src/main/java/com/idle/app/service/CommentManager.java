@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.TransactionException;
+import org.hibernate.classic.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,10 +72,20 @@ public class CommentManager  {
 	}
 	
 //	Delete
-//	@Transactional
-//	public ServerResponse<String> deleteComment(Long id){
-//		
-//	}
+	public ServerResponse<String> deleteComment(Long id){
+		try{
+			if(id==null) return ServerResponse.createByErrorMessage("no id provided");
+			Session currentSession = this.sessionFactory.getCurrentSession();
+			Comment comment = (Comment) currentSession.get(Comment.class, id);
+			currentSession.delete(comment);
+			return ServerResponse.createBySuccess();
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e.toString());
+			return ServerResponse.createByErrorMessage("delete faild, caused by: "
+				+e.toString());
+		}
+	}
 	
 	
 	
