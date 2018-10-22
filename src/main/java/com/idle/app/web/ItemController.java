@@ -27,6 +27,7 @@ import com.idle.app.domain.Category;
 import com.idle.app.domain.Comment;
 import com.idle.app.domain.Item;
 import com.idle.app.domain.User;
+import com.idle.app.domain.ViewRecord;
 import com.idle.app.service.CategoryManager;
 import com.idle.app.service.CommentManager;
 import com.idle.app.service.ItemManager;
@@ -152,6 +153,8 @@ public class ItemController {
 		if(userId!=null) {
 			this.viewRecordManager.addRecord(item, this.userManager.getUserByUserId(userId).getData());
 		}
+		ViewRecord record = this.viewRecordManager.getRecord(item, userManager.getUserByUserId(userId).getData()).getData();
+		session.setAttribute("favStatus", record.getStatus());
 		model.addAttribute("item", item);
 		List<Comment> comments = commentManager.getCommentsByItem(item).getData();
 		model.addAttribute("comments", comments);
@@ -189,7 +192,16 @@ public class ItemController {
 				return null;
 			}
 		}
+	}
+	
+	@RequestMapping(value="/changeFav", method = RequestMethod.GET)
+	public String changeFav(HttpServletResponse response, HttpSession session) {
+		Long userId = (Long) session.getAttribute("userId");
+		Long itemId = (Long)session.getAttribute("itemId");
 		
+		
+		viewRecordManager.changeFavStatus(itemManager.getItemById(itemId), userManager.getUserByUserId(userId).getData());
+		return "redirect:/item/get/"+itemId.toString();
 	}
 	
 	

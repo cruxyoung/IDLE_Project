@@ -8,7 +8,13 @@
 
 <title>item</title>
 <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet" type="text/css" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+<style>
+.red-icon{
+color:red !important;
+}
+</style>
 </head>
 
 
@@ -23,7 +29,7 @@
 
 
 <div class="row">
-<div class="col-6 col-md"></div>
+<div class="col-6 col-md"></span></div>
 <div class="col-6 col-md">
 <img class="mb-2" src="<c:out value='${item.photo}'/>" alt="" height="300px" width="300px">
 
@@ -35,6 +41,15 @@
 <li><h3>item description: <c:out value='${item.description}'/></h3>  </li>
 <li><h3>item owner: <c:out value='${item.owner.getUserName()}'/></h3>  </li>
 <li><h3>item quantity: <c:out value='${item.quantity}'/></h3>  </li>
+<%
+	Long fav = (Long)session.getAttribute("favStatus");
+	if(fav==0){ %>
+		<li><a href="/app/item/changeFav"><span class="fa fa-heart"></a></li>
+	<% }else { %>
+	<li><a href="/app/item/changeFav"><span class="fa fa-heart red-icon"></a></li>
+<% } %>
+
+
 <li><h3>item Category: <c:out value='${item.category.categoryName}'/></h3>
 </ul>
 
