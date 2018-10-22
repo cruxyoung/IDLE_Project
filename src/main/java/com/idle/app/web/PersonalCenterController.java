@@ -2,6 +2,7 @@ package com.idle.app.web;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.idle.app.common.ServerResponse;
+import com.idle.app.domain.Address;
 import com.idle.app.domain.User;
+import com.idle.app.service.AddressManager;
 import com.idle.app.service.UserManager;
 
 @Controller
@@ -24,6 +27,9 @@ import com.idle.app.service.UserManager;
 public class PersonalCenterController {
 	@Autowired
 	private UserManager userManager;
+	
+	@Autowired
+	private AddressManager addressManager;
 	
 	@RequestMapping(value = "personalinfo", method = RequestMethod.GET)
 	public String personalInfo(Locale locale, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
@@ -45,7 +51,21 @@ public class PersonalCenterController {
 	}  
 	
 	@RequestMapping(value = "address", method = RequestMethod.GET)
-	public String address(Locale locale, Model model) {
+	public String address(Locale locale, Model model,  HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		HttpSession session = httpServletRequest.getSession();
+		Long userId = (Long) session.getAttribute("userId");
+		if(userId == null) {
+			try {
+				httpServletResponse.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		ServerResponse<List<Address>> re = this.addressManager.getAllAddressByUserId(userId);
+		model.addAttribute("addresslist",re.getData());
 		return "address";
 	} 
 	
