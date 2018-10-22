@@ -7,8 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>item</title>
-<link href="<c:url value="/resources/css/bootstrap.css" />"
-	rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -26,7 +25,7 @@
 <div class="row">
 <div class="col-6 col-md"></div>
 <div class="col-6 col-md">
-<img class="mb-2" src="<c:url value="/resources/placeholder.png"/>" alt="">
+<img class="mb-2" src="<c:out value='${item.photo}'/>" alt="" height="300px" width="300px">
 
 </div>
 <div class="col-6 col-md">
@@ -34,8 +33,9 @@
 
 <li><h3>item name: <c:out value='${item.name}'/></h3></li>
 <li><h3>item description: <c:out value='${item.description}'/></h3>  </li>
-<li><h3>item owner: <c:out value='${item.owner.name}'/></h3>  </li>
+<li><h3>item owner: <c:out value='${item.owner.getUserName()}'/></h3>  </li>
 <li><h3>item quantity: <c:out value='${item.quantity}'/></h3>  </li>
+<li><h3>item Category: <c:out value='${item.category.categoryName}'/></h3>
 </ul>
 
 <input class="btn btn-primary" type="button" value="Buy it now!">
@@ -50,7 +50,7 @@
 
 </div>
 
-
+<jsp:include page="commentArea.jsp" flush="true"/>
 
 
 <div class="container-fluid">

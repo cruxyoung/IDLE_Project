@@ -2,11 +2,14 @@ package com.idle.app.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -42,6 +45,9 @@ public class User implements Serializable{
 	
 	@Column(name="last_edit_time")
     private Date lastEditTime;
+	
+	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	List<Comment> comments;
 
 	public Long getUserId() {
 		return userId;
