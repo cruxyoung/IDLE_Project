@@ -8,7 +8,7 @@
 <title>Personal Center</title>
 <link href="<c:url value="/resources/css/bootstrap.css" />"
 	rel="stylesheet" type="text/css" />
-
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 </head>
 
@@ -37,7 +37,8 @@
 						href="http://localhost:8080/app/personalcenter/mypublished">My
 							Published</a></li>
 				</ul>
-
+<a href="#"><span class="fa fa-glass"></span></a>
+<span class="fa fa-heart"></span>
 				<br />
 
 				<div class="row margin-top-20">
@@ -59,7 +60,7 @@
 									<td>${address.receiverName}</td>
 									<td>${address.receiverPhone}</td>
 									<td>${address.address}</td>
-									<td></td>
+									<td><a href="#"><span class="fa fa-glass"></span></a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
