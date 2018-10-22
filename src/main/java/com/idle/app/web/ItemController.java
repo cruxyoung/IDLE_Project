@@ -3,6 +3,7 @@ package com.idle.app.web;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,7 +111,17 @@ public class ItemController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String getAddItem(Model model) {
+	public String getAddItem(Model model, HttpServletRequest request,HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		Long userId = (Long) session.getAttribute("userId");
+		if(userId==null) {
+			try {
+				response.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+				
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
 		List<Category> cates = categoryManager.getCategories();
 		model.addAttribute("cates",cates);
 		return "addItem";
