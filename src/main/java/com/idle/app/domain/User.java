@@ -48,6 +48,9 @@ public class User implements Serializable{
 	
 	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
 	List<Comment> comments;
+	
+	@OneToMany(mappedBy="owner",cascade=CascadeType.ALL)
+	List<Item> items;
 
 	public Long getUserId() {
 		return userId;

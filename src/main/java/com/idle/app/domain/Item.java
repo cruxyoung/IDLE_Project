@@ -53,7 +53,7 @@ public class Item implements Serializable {
 	private Integer priority;
 	// wait a secon
 
-	@ManyToOne()
+	@ManyToOne(cascade=CascadeType.DETACH)
     @JoinColumn(name="owner_id")
     private User owner;
 

@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.idle.app.common.ServerResponse;
+import com.idle.app.domain.Comment;
 import com.idle.app.domain.Item;
+import com.idle.app.domain.User;
 
 @Service(value = "itemManager")
 @Transactional
@@ -132,6 +134,20 @@ public class ItemManager {
 		Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
 		query.executeUpdate();
 
+	}
+//	get all items by user
+	public ServerResponse<List<Item>>  getItemsByUser(User user){
+		if(user==null) return ServerResponse.createByErrorMessage("specify your user!");
+		try {
+			Session currentSession = this.sessionFactory.getCurrentSession();
+			String queryString = "from item where owner.userId=:user";
+			Query query = this.sessionFactory.getCurrentSession().createQuery(queryString);
+			List<Item> res = query.setParameter("user", user.getUserId()).list();
+			return ServerResponse.createBySuccess("query success",res);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ServerResponse.createByErrorMessage("Search failed");
+		}
 	}
 
 }
