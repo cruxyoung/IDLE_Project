@@ -9,6 +9,7 @@
 <link href="<c:url value="/resources/css/bootstrap.css" />"
 	rel="stylesheet" type="text/css" />
 
+
 </head>
 
 <body>
@@ -84,8 +85,7 @@
 <script> 
 
 //取出传回来的参数error并与yes比较
-  var errori ='<%=request.getParameter("error")%>
-	';
+  var errori ='<%=request.getParameter("error")%>';
 	if (errori == 'yes') {
 		alert("Wrong username or password!");
 	}
