@@ -47,6 +47,13 @@ return result;
 }
 </script>
 
+<script type="text/javascript">
+var errori='<%=request.getParameter("error")%>';
+if(errori=='notAuthorized'){
+	alert("Your are not allowed to delete comments of other users!!!");
+}
+</script>
+
 
 
 

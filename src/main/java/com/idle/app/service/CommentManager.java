@@ -70,6 +70,15 @@ public class CommentManager  {
 		List<Comment> res = query.setParameter("item", item.getId()).list();
 		return ServerResponse.createBySuccess("query successfully", res);
 	}
+//	query by comment id
+	public ServerResponse<Comment> getCommentsById(Long id){
+		if(id==null) return ServerResponse.createByErrorMessage("please specify comment id");
+		String queryString = "FROM Comment where id=:id";
+		Query query = this.sessionFactory.getCurrentSession().createQuery(queryString);
+		Comment res = (Comment)query.setParameter("id",id).uniqueResult();
+		return ServerResponse.createBySuccess("query successfully", res);
+	}
+	
 	
 //	Delete
 	public ServerResponse<String> deleteComment(Long id){

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -165,10 +166,24 @@ public class ItemController {
 		
 	}
 	@RequestMapping(value="/get/comment/delete/{id}", method= RequestMethod.GET)
-	public String deleteComment(@PathVariable("id") Long id, HttpSession session) {
-		commentManager.deleteComment(id);
+	public String deleteComment(@PathVariable("id") Long id, HttpSession session,HttpServletResponse response) {
+		Long userId = (Long) session.getAttribute("userId");
 		Long itemId = (Long)session.getAttribute("itemId");
-		return "redirect:/item/get/"+itemId.toString();
+		Comment com = commentManager.getCommentsById(id).getData();
+		if(com.getUser().getUserId().equals(userId)) {
+			commentManager.deleteComment(id);
+			
+			return "redirect:/item/get/"+itemId.toString();
+		}else {
+			try {
+				response.sendRedirect("http://localhost:8080/app/item/get/"+itemId.toString()+"?error=notAuthorized");
+				return null;
+			}catch(IOException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
 	}
 	
 	
