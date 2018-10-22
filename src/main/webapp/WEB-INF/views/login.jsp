@@ -66,7 +66,14 @@
 
 //取出传回来的参数error并与yes比较
   var errori ='<%=request.getParameter("error")%>';
+  var result ='<%=request.getParameter("SignUpresult")%>';
   if(errori=='yes'){
    alert("Wrong username or password!");
+  }else if(errori=='notlogin'){
+	  alert("Please Sign In!");
+  }
+  if(result=='0'){
+	alert("Sign Up Successfully!");
+	  
   }
 </script>

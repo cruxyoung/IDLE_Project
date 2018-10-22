@@ -52,6 +52,7 @@ public class UserController {
 	public String signout(HttpServletRequest httpServletRequest) {
 		HttpSession session = httpServletRequest.getSession();
 		session.removeAttribute("username");
+		session.removeAttribute("userId");
 		return "main";
 	}
 	
@@ -82,7 +83,12 @@ public class UserController {
 		
 		ServerResponse<String> response = userManager.addUser(user);
 		if(response.getStatus() == 0) {
-			return "login";
+			try {
+				httpServletResponse.sendRedirect("login?SignUpresult="+response.getStatus());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else {
 			try {
 				httpServletResponse.sendRedirect("register?error="+response.getMsg());
@@ -93,4 +99,42 @@ public class UserController {
 		}
 		return null;
 	}
+	
+	@RequestMapping(value = "modifyuserinfo.do", method = RequestMethod.POST)
+	public String modiftUserInfo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		String username = httpServletRequest.getParameter("username");
+		String password = httpServletRequest.getParameter("password");
+		String confirmPassword = httpServletRequest.getParameter("confirmpassword");
+		String email = httpServletRequest.getParameter("email");
+		String phone = httpServletRequest.getParameter("phone");
+		
+		
+		if(!password.equals(confirmPassword)) {
+			try {
+				httpServletResponse.sendRedirect("personalinfo?error=wrongPassword");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}else {
+			User user = new User();
+			
+			user.setUserName(username);
+			user.setPassword(password);
+			user.setEmail(email);
+			user.setPhone(phone);
+			user.setLastEditTime(new Date());
+			
+			ServerResponse<String> response = this.userManager.updateUser(user);
+			try {
+				httpServletResponse.sendRedirect("personalinfo?UpdateResult="+response.getMsg());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
 }

@@ -69,25 +69,32 @@ public class DatabaseUserManager implements UserManager {
 			if (user == null || user.getUserId() == null) {
 				return ServerResponse.createByErrorMessage("Cannot find this user, Try again!");
 			}
+			User originalUser = getUserByUserId(user.getUserId()).getData();
+			
 			// check user name
-			ServerResponse<String> res = checkUsername(user.getUserName());
-			if (res.getStatus() != 0)
-				return res;
-
+			if(!originalUser.getUserName().equals(user.getUserName())) {
+				ServerResponse<String> res = checkUsername(user.getUserName());
+				if (res.getStatus() != 0)
+					return res;
+			}
+			
 			// check email
-			res = checkEmail(user.getEmail());
-			if (res.getStatus() != 0)
-				return res;
+			if(!originalUser.getEmail().equals(user.getEmail())) {
+				ServerResponse<String> res = checkEmail(user.getEmail());
+				if (res.getStatus() != 0)
+					return res;
+			}
 
 			Session session = sessionFactory.getCurrentSession();
 			// session.beginTransaction();
-			String hql = "update User u set u.userName=?, u.email=?, u.phone=?, u.lastEditTime=? where u.userId=?";
+			String hql = "update User u set u.userName=?, u.email=?, u.phone=?, u.lastEditTime=?, u.password=? where u.userId=?";
 			Query query = session.createQuery(hql);
 			query.setParameter(0, user.getUserName());
 			query.setParameter(1, user.getEmail());
 			query.setParameter(2, user.getPhone());
 			query.setParameter(3, new Date());
-			query.setParameter(4, user.getUserId());
+			query.setParameter(4, user.getPassword());
+			query.setParameter(5, user.getUserId());
 			query.executeUpdate();
 			// session.getTransaction().commit();
 			return ServerResponse.createBySuccessMessage("Update Information successfully!");
@@ -175,12 +182,13 @@ public class DatabaseUserManager implements UserManager {
 		if (res.getStatus() == 0)
 			return ServerResponse.createByErrorMessage("Username is wrong!");
 		else {
-			
+
 			try {
-				Query query = this.sessionFactory.getCurrentSession().createQuery("from User u where u.userName=? and u.password=?");
+				Query query = this.sessionFactory.getCurrentSession()
+						.createQuery("from User u where u.userName=? and u.password=?");
 				query.setString(0, username);
 				query.setString(1, password);
-				List <User>list = query.list();
+				List<User> list = query.list();
 				if (list.isEmpty()) {
 					return ServerResponse.createByErrorMessage("Fail to login, your password is wrong!");
 				} else {
@@ -199,7 +207,27 @@ public class DatabaseUserManager implements UserManager {
 		Session currentSession = this.sessionFactory.getCurrentSession();
 
 		User user = (User) currentSession.get(User.class, userId);
+		if (user == null) {
+			return ServerResponse.createByErrorMessage("Cannot find the user! Please Reload!");
+		}
 		return ServerResponse.createBySuccess("Get the user successfully!", user);
+	}
+
+	@Override
+	public ServerResponse<String> updateBalance(User user) {
+		if (user == null || user.getUserId() == null) {
+			return ServerResponse.createByErrorMessage("Cannot find this user, Try again!");
+		}
+		User originalUser = getUserByUserId(user.getUserId()).getData();
+		Session session = sessionFactory.getCurrentSession();
+		// session.beginTransaction();
+		String hql = "update User u set u.balance=? where u.userId=?";
+		Query query = session.createQuery(hql);
+		query.setParameter(0, user.getBalance() + originalUser.getBalance());
+		query.setParameter(1, user.getUserId());
+		query.executeUpdate();
+		// session.getTransaction().commit();
+		return ServerResponse.createBySuccessMessage("Top Up successfully!");
 	}
 
 }
