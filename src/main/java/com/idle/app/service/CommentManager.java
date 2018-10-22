@@ -54,14 +54,7 @@ public class CommentManager  {
 			return ServerResponse.createByErrorMessage("Add comment failed!");
 		}
 	}
-//	Query by user
-	public ServerResponse<List<Comment>> getCommentsByUser(User user){
-		if(user==null) return ServerResponse.createByErrorMessage("please specify user");
-		String queryString = "FROM Comment where user=:user";
-		Query query = this.sessionFactory.getCurrentSession().createQuery(queryString);
-		List<Comment> res = query.setParameter("user", user.getUserId()).list();
-		return ServerResponse.createBySuccess("query successfully", res);
-	}
+
 //	Query by item
 	public ServerResponse<List<Comment>> getCommentsByItem(Item item){
 		if(item==null) return ServerResponse.createByErrorMessage("please specify item");

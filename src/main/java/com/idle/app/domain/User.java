@@ -51,7 +51,9 @@ public class User implements Serializable{
 	
 	@OneToMany(mappedBy="owner",cascade=CascadeType.ALL)
 	List<Item> items;
-
+	
+	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	List<ViewRecord> viewRecords;
 	public Long getUserId() {
 		return userId;
 	}

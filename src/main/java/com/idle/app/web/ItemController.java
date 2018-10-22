@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +31,7 @@ import com.idle.app.service.CategoryManager;
 import com.idle.app.service.CommentManager;
 import com.idle.app.service.ItemManager;
 import com.idle.app.service.UserManager;
+import com.idle.app.service.ViewRecordManager;
 
 @Controller
 @RequestMapping(value = "/item/**")
@@ -47,6 +47,9 @@ public class ItemController {
 	private CategoryManager categoryManager;
 	@Autowired
 	private CommentManager commentManager;
+	@Autowired
+	private ViewRecordManager viewRecordManager;
+	
 
 	// create
 	@RequestMapping(value="/add", method=RequestMethod.POST)
@@ -145,7 +148,10 @@ public class ItemController {
 		// res.put("name", itm.getName());
 		if(item!=null)
 			session.setAttribute("itemId", id);
-		
+		Long userId = (Long)session.getAttribute("userId");
+		if(userId!=null) {
+			this.viewRecordManager.addRecord(item, this.userManager.getUserByUserId(userId).getData());
+		}
 		model.addAttribute("item", item);
 		List<Comment> comments = commentManager.getCommentsByItem(item).getData();
 		model.addAttribute("comments", comments);
