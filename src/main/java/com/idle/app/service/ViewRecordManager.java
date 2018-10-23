@@ -79,6 +79,15 @@ public class ViewRecordManager {
 		return ServerResponse.createBySuccess("query successfully", res);
 	}
 	
+//	Query by user
+	public ServerResponse<List<ViewRecord>> getFavoriteRecordsByUser(User user){
+		if(user==null) return ServerResponse.createByErrorMessage("please specify user");
+		String queryString = "FROM ViewRecord where user.id=:user and status=1";
+		Query query = this.sessionFactory.getCurrentSession().createQuery(queryString);
+		List<ViewRecord> res = query.setParameter("user", user.getUserId()).list();
+		return ServerResponse.createBySuccess("query successfully", res);
+	}
+	
 //	update lastedittime
 	public ServerResponse<String> updateLastEditTime(Item item, User user){
 		if(item==null||user==null) return ServerResponse.createByErrorMessage("missing item or user");
