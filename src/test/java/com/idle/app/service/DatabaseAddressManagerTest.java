@@ -62,7 +62,7 @@ public class DatabaseAddressManagerTest extends BaseTest{
 	@Test
 //	@Ignore
 	public void testDeleteAddress() {
-		Long addressId = 7L;
+		Long addressId = 14L;
 		ServerResponse<String> re = this.addressmanager.deleteAddress(addressId);
 		System.out.println(re.getStatus()+"\n" +re.getMsg());
 	}

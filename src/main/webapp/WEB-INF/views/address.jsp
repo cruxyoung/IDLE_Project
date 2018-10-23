@@ -8,6 +8,9 @@
 <title>Personal Center</title>
 <link href="<c:url value="/resources/css/bootstrap.css" />"
 	rel="stylesheet" type="text/css" />
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
 
 </head>
 
@@ -24,7 +27,8 @@
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/personalinfo">Personal
 							Information</a></li>
-					<li class="nav-item"><a class="nav-link active" href="#">Address
+					<li class="nav-item"><a class="nav-link active"
+						href="http://localhost:8080/app/personalcenter/address">Address
 							Management</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/viewhistory">View
@@ -58,17 +62,33 @@
 									<td>${address.receiverName}</td>
 									<td>${address.receiverPhone}</td>
 									<td>${address.address}</td>
-									<td></td>
+									<td><a href="address/addressdetail/${address.addressId}"><span
+											class="fa fa-pencil"></span></a>
+										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a
+										href="address/delete/${address.addressId}"><span
+											class="fa fa-remove"
+											onclick="javascript: return confirmDelete()"></span></a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
-
 					</table>
 				</div>
+
 
 			</div>
 
 			<div class="col"></div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-4"></div>
+			<div class="col-4">
+				<br /> <a class="btn btn-outline-primary"
+					href="/app/personalcenter/address/addaddress"
+					style="display: block; text-align: center">Add a New Address.</a>
+			</div>
+			<div class="col-4"></div>
 		</div>
 	</div>
 
@@ -84,9 +104,16 @@
 <script> 
 
 //取出传回来的参数error并与yes比较
-  var errori ='<%=request.getParameter("error")%>
+  var updateresult ='<%=request.getParameter("updateresult")%>
 	';
-	if (errori == 'yes') {
-		alert("Wrong username or password!");
+	if (updateresult != 'null') {
+		alert(updateresult);
+	}
+</script>
+
+<script type="text/javascript">
+	function confirmDelete() {
+		var result = confirm("Are you sure to delete it?");
+		return result;
 	}
 </script>
