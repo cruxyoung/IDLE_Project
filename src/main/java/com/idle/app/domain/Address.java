@@ -41,7 +41,7 @@ public class Address implements Serializable{
 	@Column(name="last_edit_time")
     private Date lastEditTime;
 	
-	@ManyToOne(cascade=CascadeType.REFRESH)
+	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(name="user_id")
     private User user;
 	

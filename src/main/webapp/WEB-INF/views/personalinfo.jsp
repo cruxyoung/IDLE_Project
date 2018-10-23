@@ -22,7 +22,7 @@
 
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link active" href="#">Personal Information</a>
+    <a class="nav-link active" href="http://localhost:8080/app/personalcenter/personalinfo">Personal Information</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="http://localhost:8080/app/personalcenter/address">Address Management</a>

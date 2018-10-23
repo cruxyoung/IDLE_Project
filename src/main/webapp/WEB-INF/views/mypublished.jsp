@@ -34,7 +34,7 @@
     <a class="nav-link" href="http://localhost:8080/app/personalcenter/myfavorite">My Favorite</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="#">My Published</a>
+    <a class="nav-link active" href="http://localhost:8080/app/personalcenter/mypublished">My Published</a>
   </li>
 </ul>
 

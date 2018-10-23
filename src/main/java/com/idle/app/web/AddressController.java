@@ -40,6 +40,17 @@ public class AddressController {
 		return "addressDetail";
 	}
 
+	@RequestMapping(value = "/delete/{id}")
+	public void deleteAddress(@PathVariable("id") Long addressId, HttpServletResponse httpServletResponse) {
+		ServerResponse<String> re = this.addressManager.deleteAddress(addressId);
+		try {
+			httpServletResponse.sendRedirect("http://localhost:8080/app/personalcenter/address?updateresult="+re.getMsg());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping(value = "/addressdetail/modify/{id}")
 	public void modifyAddress(@PathVariable("id") Long addressId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 		String receiverName = httpServletRequest.getParameter("recivername");

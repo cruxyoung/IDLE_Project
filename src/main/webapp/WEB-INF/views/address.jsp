@@ -27,7 +27,8 @@
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/personalinfo">Personal
 							Information</a></li>
-					<li class="nav-item"><a class="nav-link active" href="#">Address
+					<li class="nav-item"><a class="nav-link active"
+						href="http://localhost:8080/app/personalcenter/address">Address
 							Management</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/viewhistory">View
@@ -63,7 +64,8 @@
 									<td>${address.address}</td>
 									<td><a href="address/addressdetail/${address.addressId}"><span
 											class="fa fa-pencil"></span></a>
-										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a href="#"><span
+										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a
+										href="address/delete/${address.addressId}"><span
 											class="fa fa-remove"
 											onclick="javascript: return confirmDelete()"></span></a></td>
 								</tr>
@@ -72,23 +74,22 @@
 					</table>
 				</div>
 
-				
+
 			</div>
 
 			<div class="col"></div>
 		</div>
-		
-		
+
+
 		<div class="row">
-					<div class="col-4"></div>
-					<div class="col-4">
-						<br /> <a class="btn btn-outline-primary"
-							href="/app/personalcenter/address/addaddress"
-							style="display: block; text-align: center">Add a New
-							Address.</a>
-					</div>
-					<div class="col-4"></div>
-				</div>
+			<div class="col-4"></div>
+			<div class="col-4">
+				<br /> <a class="btn btn-outline-primary"
+					href="/app/personalcenter/address/addaddress"
+					style="display: block; text-align: center">Add a New Address.</a>
+			</div>
+			<div class="col-4"></div>
+		</div>
 	</div>
 
 	<div class="container-fluid">
@@ -103,7 +104,8 @@
 <script> 
 
 //取出传回来的参数error并与yes比较
-  var updateresult ='<%=request.getParameter("updateresult")%>';
+  var updateresult ='<%=request.getParameter("updateresult")%>
+	';
 	if (updateresult != 'null') {
 		alert(updateresult);
 	}
