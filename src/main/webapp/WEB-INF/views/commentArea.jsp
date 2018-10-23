@@ -2,7 +2,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col"></div>
-		<div class="col-6">
+		<div class="col-8">
 			<form action="comment/add" method="POST">
 
 				<label for="content">Comment:</label>
