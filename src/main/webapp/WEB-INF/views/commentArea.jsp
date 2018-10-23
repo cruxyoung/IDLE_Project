@@ -23,12 +23,12 @@
 					<div class="media">
 						<div class="media-body">
 
-							<h4 class="media-heading user_name">User: ${comment.user.getUserName()}
+							<h4 class="media-heading user_name">Posted By: ${comment.user.getUserName()}
 							</h4>
-							<h2>${comment.content}</h2>
+							${comment.content}
 
 							<p>
-							<a class="btn btn-outline-primary" href="comment/delete/${comment.id}" onclick="javascript: return confirmDelete()">Delete</a>
+							<a href="comment/delete/${comment.id}" onclick="javascript: return confirmDelete()">Delete</a>
        
 							</p>
 						</div>

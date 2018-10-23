@@ -8,7 +8,9 @@
 
 <title>item</title>
 <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/comment-list.css" />" rel="stylesheet" type="text/css" />
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 
 <style>
 .red-icon{
