@@ -91,9 +91,9 @@ public class DatabaseAddressManager implements AddressManager {
 
 		Address address = (Address) currentSession.get(Address.class, addressId);
 		if (address == null) {
-			return ServerResponse.createByErrorMessage("Cannot find the user! Please Reload!");
+			return ServerResponse.createByErrorMessage("Cannot find the address! Please Reload!");
 		}
-		return ServerResponse.createBySuccess("Get the user successfully!", address);
+		return ServerResponse.createBySuccess("Get the address successfully!", address);
 	}
 
 	@Override

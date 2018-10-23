@@ -2,10 +2,10 @@
 
 <html>
 <head>
-<title>Personal Center</title>
+<title>Address Detail</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>Personal Center</title>
+<title>Address Detail</title>
 <link href="<c:url value="/resources/css/bootstrap.css" />"
 	rel="stylesheet" type="text/css" />
 <link
@@ -42,35 +42,27 @@
 
 				<br />
 
-				<div class="row margin-top-20">
-					<table class="table">
-						<thead>
-							<tr>
-								<th class="seq">Id</th>
-								<th>Receiver</th>
-								<th>Phone</th>
-								<th>Address</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
+		<form class="form-addressModify" action="modify/${address.addressId}" method="POST">
 
-							<c:forEach var="address" items="${addresslist}" varStatus="loop">
-								<tr>
-									<td>${loop.index + 1}</td>
-									<td>${address.receiverName}</td>
-									<td>${address.receiverPhone}</td>
-									<td>${address.address}</td>
-									<td><a href="address/addressdetail/${address.addressId}"><span class="fa fa-pencil"></span></a>
-										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-										<a href="#"><span class="fa fa-remove" onclick="javascript: return confirmDelete()"></span></a>
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-
-					</table>
-				</div>
+        <br/>
+        
+        <label for="recivername">Receiver Name</label>
+        <input name="recivername" type="text" id="recivername" class="form-control" value='${address.receiverName}' required autofocus>
+        <br/>
+        
+        <label for="receiverphone">Receiver Phone</label>
+        <input name="receiverphone" type="text" id="receiverphone" class="form-control" value='${address.receiverPhone}' required>
+        <br/>
+        
+        <label for="address">Address</label>
+        <input name="address" type="text" id="address" class="form-control" value='${address.address}' required autofocus>
+        <br/>
+        
+        <br/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Modify</button>
+        <br/>
+        <a class="btn btn-lg btn-outline-primary" href="http://localhost:8080/app/personalcenter/address" style="display:block;text-align:center">Cancel</a>
+      </form>
 
 			</div>
 
@@ -86,19 +78,3 @@
 </body>
 
 </html>
-
-<script> 
-
-//取出传回来的参数error并与yes比较
-  var updateresult ='<%=request.getParameter("updateresult")%>';
-	if (updateresult != 'null') {
-		alert(updateresult);
-	}
-</script>
-
-<script type="text/javascript">
-function confirmDelete(){
-var result = confirm("Are you sure to delete it?");
-return result;
-}
-</script>
