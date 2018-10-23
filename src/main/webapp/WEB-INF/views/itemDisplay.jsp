@@ -31,7 +31,7 @@ color:red !important;
 
 
 <div class="row">
-<div class="col-6 col-md"></span></div>
+<div class="col-6 col-md"></div>
 <div class="col-6 col-md">
 <img class="mb-2" src="<c:out value='${item.photo}'/>" alt="" height="300px" width="300px">
 
