@@ -61,21 +61,34 @@
 									<td>${address.receiverName}</td>
 									<td>${address.receiverPhone}</td>
 									<td>${address.address}</td>
-									<td><a href="address/addressdetail/${address.addressId}"><span class="fa fa-pencil"></span></a>
-										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-										<a href="#"><span class="fa fa-remove" onclick="javascript: return confirmDelete()"></span></a>
-									</td>
+									<td><a href="address/addressdetail/${address.addressId}"><span
+											class="fa fa-pencil"></span></a>
+										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a href="#"><span
+											class="fa fa-remove"
+											onclick="javascript: return confirmDelete()"></span></a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
-
 					</table>
 				</div>
 
+				
 			</div>
 
 			<div class="col"></div>
 		</div>
+		
+		
+		<div class="row">
+					<div class="col-4"></div>
+					<div class="col-4">
+						<br /> <a class="btn btn-outline-primary"
+							href="/app/personalcenter/address/addaddress"
+							style="display: block; text-align: center">Add a New
+							Address.</a>
+					</div>
+					<div class="col-4"></div>
+				</div>
 	</div>
 
 	<div class="container-fluid">
@@ -97,8 +110,8 @@
 </script>
 
 <script type="text/javascript">
-function confirmDelete(){
-var result = confirm("Are you sure to delete it?");
-return result;
-}
+	function confirmDelete() {
+		var result = confirm("Are you sure to delete it?");
+		return result;
+	}
 </script>

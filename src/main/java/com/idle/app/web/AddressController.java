@@ -1,6 +1,7 @@
 package com.idle.app.web;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,13 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.idle.app.common.ServerResponse;
 import com.idle.app.domain.Address;
+import com.idle.app.domain.User;
 import com.idle.app.service.AddressManager;
+import com.idle.app.service.UserManager;
 
 @Controller
 @RequestMapping(value = "/personalcenter/address")
 public class AddressController {
 	@Autowired
 	private AddressManager addressManager;
+	
+	@Autowired
+	private UserManager userManager;
 
 	@RequestMapping(value = "/addressdetail/{id}")
 	public String viewAddress(@PathVariable("id") Long addressId, Model model, HttpServletRequest httpServletRequest) {
@@ -57,5 +63,37 @@ public class AddressController {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@RequestMapping(value = "/addaddress")
+	public String add(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		return "addAddress";
+	}
+	
+	
+	@RequestMapping(value = "/add")
+	public void addAddress(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		String receiverName = httpServletRequest.getParameter("recivername");
+		String receiverPhone = httpServletRequest.getParameter("receiverphone");
+		String address = httpServletRequest.getParameter("address");
+		Address newAddress = new Address();
+		newAddress.setReceiverName(receiverName);
+		newAddress.setReceiverPhone(receiverPhone);
+		newAddress.setAddress(address);
+		newAddress.setCreateTime(new Date());
+		newAddress.setLastEditTime(new Date());
+		
+		HttpSession session = httpServletRequest.getSession();
+		Long userId = (Long) session.getAttribute("userId");
+		User user = this.userManager.getUserByUserId(userId).getData();
+		newAddress.setUser(user);
+		
+		ServerResponse<String> re = this.addressManager.addAddress(newAddress);
+		try {
+			httpServletResponse.sendRedirect("http://localhost:8080/app/personalcenter/address?updateresult="+re.getMsg());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

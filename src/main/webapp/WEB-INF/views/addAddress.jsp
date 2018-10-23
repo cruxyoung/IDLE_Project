@@ -2,10 +2,10 @@
 
 <html>
 <head>
-<title>Address Detail</title>
+<title>Add Address</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>Address Detail</title>
+<title>Add Address</title>
 <link href="<c:url value="/resources/css/bootstrap.css" />"
 	rel="stylesheet" type="text/css" />
 <link
@@ -43,22 +43,24 @@
 
 				<br />
 
-				<form class="form-addressModify"
-					action="modify/${address.addressId}" method="POST">
+				<form class="form-addAddress" action="add" method="POST">
 
 					<br /> <label for="recivername">Receiver Name</label> <input
 						name="recivername" type="text" id="recivername"
-						class="form-control" value='${address.receiverName}' required
-						autofocus> <br /> <label for="receiverphone">Receiver
-						Phone</label> <input name="receiverphone" type="text" id="receiverphone"
-						class="form-control" value='${address.receiverPhone}' required>
+						class="form-control" placeholder="Enther the receiver name"
+						required autofocus> 
+					<br /> <label for="receiverphone">Receiver Phone</label> <input 
+						name="receiverphone" type="text" id="receiverphone"
+						class="form-control" placeholder="Enther the receiver phone" required>
 					<br /> <label for="address">Address</label> <input name="address"
 						type="text" id="address" class="form-control"
-						value='${address.address}' required autofocus> <br /> <br />
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Modify</button>
+						placeholder="Enther the detail address" required autofocus> 
+					<br /> <br />
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Confirm</button>
 					<br /> <a class="btn btn-lg btn-outline-primary"
 						href="http://localhost:8080/app/personalcenter/address"
 						style="display: block; text-align: center">Cancel</a>
+					
 				</form>
 
 			</div>
