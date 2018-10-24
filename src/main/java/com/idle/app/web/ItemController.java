@@ -133,11 +133,14 @@ public class ItemController {
 	}
 
 	// delete
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-	public String deleteItem(@PathVariable("id") Long id) {
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	public void deleteItem(@PathVariable("id") Long id, HttpServletResponse response) {
 		this.itemManager.deleteItem(id);
-		return "delete ok";
-
+		try {
+			response.sendRedirect("http://localhost:8080/app/personalcenter/mypublished?result=yes");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// read

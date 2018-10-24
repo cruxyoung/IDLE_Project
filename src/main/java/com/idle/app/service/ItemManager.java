@@ -75,7 +75,7 @@ public class ItemManager {
 			Session currentSession = this.sessionFactory.getCurrentSession();
 			Item item = (Item) currentSession.get(Item.class, id);
 			currentSession.delete(item);
-			return ServerResponse.createBySuccess();
+			return ServerResponse.createBySuccessMessage("Delete successfully!");
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println(e.toString());

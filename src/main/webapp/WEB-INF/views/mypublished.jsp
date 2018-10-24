@@ -2,10 +2,10 @@
 
 <html>
 <head>
-<title>Personal Center</title>
+<title>My Published</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>Personal Center</title>
+<title>My Published</title>
 <link href="<c:url value="/resources/css/bootstrap.css" />"
 	rel="stylesheet" type="text/css" />
 <link
@@ -67,7 +67,7 @@
 									<td><a href="#"><span
 											class="fa fa-pencil"></span></a>
 										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 
-										<a href="#http://localhost:8080/app/item/delete/${item.id}"><span
+										<a href="http://localhost:8080/app/item/delete/${item.id}"><span
 											class="fa fa-remove"
 											onclick="javascript: return confirmDelete()"></span></a></td>
 								</tr>
@@ -93,10 +93,9 @@
 
 <script> 
 
-//取出传回来的参数error并与yes比较
-  var errori ='<%=request.getParameter("error")%>';
-	if (errori == 'yes') {
-		alert("Wrong username or password!");
+  var result ='<%=request.getParameter("result")%>';
+	if (result == 'yes') {
+		alert("Delete Successfully!");
 	}
 </script>
 <script type="text/javascript">

@@ -59,14 +59,15 @@
 							<c:forEach var="viewRecord" items="${viewRecordlist}" varStatus="loop">
 								<tr>
 									<td>${loop.index + 1}</td>
-									<td><img class="mb-2" src="<c:out value='${viewRecord.item.photo}'/>"
-										alt="" height="150px" width="180px"></td>
+									<td><a href="http://localhost:8080/app/item/get/${viewRecord.item.id}">
+									<img class="mb-2" src="<c:out value='${viewRecord.item.photo}'/>"
+										alt="" height="150px" width="180px"></a></td>
 									<td>${viewRecord.item.name}</td>
 									<td>${viewRecord.item.quantity}</td>
 									<td>${viewRecord.item.price}</td>
 									<td><a href="http://localhost:8080/app/item/get/${viewRecord.item.id}"><span class="fa fa-share"></span></a>
-										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a
-										href="#"><span
+										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 
+										<a href="viewhistory/delete/${viewRecord.id}"><span
 											class="fa fa-remove"
 											onclick="javascript: return confirmDelete()"></span></a></td>
 								</tr>
@@ -90,10 +91,14 @@
 </html>
 
 <script> 
-
-//取出传回来的参数error并与yes比较
-  var errori ='<%=request.getParameter("error")%>';
-	if (errori == 'yes') {
-		alert("Wrong username or password!");
+  var result ='<%=request.getParameter("result")%>';
+	if (result != 'null') {
+		alert(result);
+	}
+</script>
+<script type="text/javascript">
+	function confirmDelete() {
+		var result = confirm("Are you sure to delete it?");
+		return result;
 	}
 </script>

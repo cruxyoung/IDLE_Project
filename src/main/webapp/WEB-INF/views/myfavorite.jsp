@@ -11,7 +11,7 @@
 <link
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
-	
+
 </head>
 
 <body>
@@ -59,19 +59,25 @@
 
 							<c:forEach var="favoriteRecord" items="${favoriteRecordlist}"
 								varStatus="loop">
+								
 								<tr>
 									<td>${loop.index + 1}</td>
-									<td><img class="mb-2"
+									<td><a href="http://localhost:8080/app/item/get/${favoriteRecord.item.id}">
+									<img class="mb-2"
 										src="<c:out value='${favoriteRecord.item.photo}'/>" alt=""
-										height="150px" width="180px"></td>
+										height="150px" width="180px"></a></td>
 									<td>${favoriteRecord.item.name}</td>
 									<td>${favoriteRecord.item.quantity}</td>
 									<td>${favoriteRecord.item.price}</td>
-									<td><a href="http://localhost:8080/app/item/get/${favoriteRecord.item.id}"><span class="fa fa-chevron-right"></span></a>
-										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a href="#"><span
+									<td><a
+										href="http://localhost:8080/app/item/get/${favoriteRecord.item.id}">
+											<span class="fa fa-share"></span>
+									</a> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 
+									<a href="myfavorite/delete/${favoriteRecord.id}"> <span
 											class="fa fa-remove"
 											onclick="javascript: return confirmDelete()"></span></a></td>
 								</tr>
+								
 							</c:forEach>
 						</tbody>
 					</table>
@@ -92,11 +98,14 @@
 </html>
 
 <script> 
-
-//取出传回来的参数error并与yes比较
-  var errori ='<%=request.getParameter("error")%>
-	';
-	if (errori == 'yes') {
-		alert("Wrong username or password!");
+  var result ='<%=request.getParameter("result")%>';
+	if (result != 'null') {
+		alert(result);
+	}
+</script>
+<script type="text/javascript">
+	function confirmDelete() {
+		var result = confirm("Are you sure to delete it?");
+		return result;
 	}
 </script>

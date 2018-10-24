@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -120,6 +121,26 @@ public class PersonalCenterController {
 		System.out.println(re.getMsg());
 		return "myfavorite";
 	}  
+	
+	@RequestMapping(value = "myfavorite/delete/{id}", method = RequestMethod.GET)
+	public void deleteMyFavorite(@PathVariable("id") Long viewRecordId, HttpServletResponse response) {
+		ServerResponse<String> re = this.viewRecordManager.deleteFavoriteRecord(viewRecordId);
+		try {
+			response.sendRedirect("http://localhost:8080/app/personalcenter/myfavorite?result="+re.getMsg());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value = "viewhistory/delete/{id}", method = RequestMethod.GET)
+	public void deleteViewhistory(@PathVariable("id") Long viewRecordId, HttpServletResponse response) {
+		ServerResponse<String> re = this.viewRecordManager.deleteViewRecord(viewRecordId);
+		try {
+			response.sendRedirect("http://localhost:8080/app/personalcenter/viewhistory?result="+re.getMsg());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@RequestMapping(value = "mypublished", method = RequestMethod.GET)
 	public String myPublished(Locale locale, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
