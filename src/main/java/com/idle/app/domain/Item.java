@@ -60,7 +60,7 @@ public class Item implements Serializable {
     @JoinColumn(name="owner_id")
     private User owner;
 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(name="catetory_id")
 	private Category category;
 

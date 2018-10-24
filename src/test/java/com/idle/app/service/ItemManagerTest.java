@@ -94,11 +94,16 @@ public class ItemManagerTest extends BaseTest {
 
 	
 
-	@After
-	public void deleteAllItemsAttheEndofTest() {
-		itemManager.deleteAllItems("Item");
-		List<Item> res = itemManager.getItems();
+//	@After
+//	public void deleteAllItemsAttheEndofTest() {
+//		itemManager.deleteAllItems("Item");
+//		List<Item> res = itemManager.getItems();
+//
+//	}
 
+	@Test
+	public void testGetItemsByUser() {
+		User user = this.userManager.getUserByUserId(1L).getData();
+		System.out.println(this.itemManager.getItemsByUser(user).getMsg());
 	}
-
 }

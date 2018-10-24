@@ -2,10 +2,10 @@
 
 <html>
 <head>
-<title>Personal Center</title>
+<title>My Sold</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>Personal Center</title>
+<title>My Sold</title>
 <link href="<c:url value="/resources/css/bootstrap.css" />"
 	rel="stylesheet" type="text/css" />
 
@@ -27,10 +27,10 @@
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/personalinfo">Profile
 					</a></li>
-					<li class="nav-item"><a class="nav-link "
+					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/address">Address
 					</a></li>
-					<li class="nav-item"><a class="nav-link active" href="#">View
+					<li class="nav-item"><a class="nav-link" href="#">View
 							History</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/myfavorite">My
@@ -41,7 +41,7 @@
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/mybought">My
 							Bought</a></li>
-					<li class="nav-item"><a class="nav-link"
+					<li class="nav-item"><a class="nav-link active"
 						href="http://localhost:8080/app/personalcenter/mysold">My Sold</a>
 					</li>
 				</ul>
