@@ -93,14 +93,7 @@ public class ItemManager {
 				return ServerResponse.createByErrorMessage("cannot find item");
 			}
 			Session currentSession = this.sessionFactory.getCurrentSession();
-//			Query query = currentSession.createQuery("update Item item set item.name=?,item.photo=?,item.quantity=?,item.description=?,item.price=?, item.category=?");
-//			query.setParameter(0,item.getName());
-//			query.setParameter(1, item.getPhoto());
-//			query.setParameter(2, item.getQuantity());
-//			query.setParameter(3, item.getDescription());
-//			query.setParameter(4, item.getPrice());
-//			query.setParameter(5, item.getCategory());
-//			query.executeUpdate();
+
 			currentSession.merge(item);
 			return ServerResponse.createBySuccess();
 		}catch(TransactionException e){

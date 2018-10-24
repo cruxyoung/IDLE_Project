@@ -35,17 +35,19 @@
 					placeholder="${item.description}" row="5"></textarea>
 				<label for="item_price">Item price</label>
 				<input name="price" type="number" value="${item.price}" class="form-control" id="item_price" placeholder="10">
-				<label for="item_photo"> Item photo(to be imple)</label>
-				<input type="file" name="file"><br /> 
-				
+				Category: 
 				<select name="category">
 				  <c:forEach items="${cates}" var="cate">
 				  	<option value = "${cate.categoryName}">${cate.categoryName}</option> 
 				  </c:forEach>
 				</select>
+				<br>
+				<label for="item_photo"> Please submit photo of your item</label>
+				<input type="file" name="file"><br /> 
+				
 
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" class="btn btn-primary float-right">Submit</button>
 		</form>
 		
     </div>

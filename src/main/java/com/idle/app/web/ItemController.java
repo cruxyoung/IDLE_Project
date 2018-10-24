@@ -281,6 +281,37 @@ public class ItemController {
 		}
 		
 	}
+	
+	@RequestMapping(value="/update/comment/{id}", method=RequestMethod.GET)
+	public String updateComment(@PathVariable("id") Long commentId, HttpSession session,HttpServletResponse response, Model model) {
+		Long userId = (Long) session.getAttribute("userId");
+		Comment comment = commentManager.getCommentsById(commentId).getData();
+		
+		if(comment.getUser().getUserId().equals(userId)) {
+			model.addAttribute("comment",comment);
+			return "updateComment";
+		}else {
+			try {
+				response.sendRedirect("http://localhost:8080/app/item/get/"+comment.getItem().getId().toString()+"?error=notAuthorized");
+				return null;
+			}catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+	
+	@RequestMapping(value="/update/comment/{id}", method=RequestMethod.POST)
+	public String updateComment(@PathVariable("id") Long commentId, HttpSession session, HttpServletRequest request) {
+		Comment comment = commentManager.getCommentsById(commentId).getData();
+		comment.setContent(request.getParameter("content"));
+		comment.setLastEditTime(new Date());
+		commentManager.updateComment(comment);
+		return "redirect:/item/get/"+comment.getItem().getId().toString();
+		
+	}
+	
+	
 
 	
 
