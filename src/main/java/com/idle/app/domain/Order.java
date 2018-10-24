@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "order_record")
-public class OrderRecord implements Serializable {
+public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
