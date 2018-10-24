@@ -51,7 +51,7 @@ public class ItemController {
 	@Autowired
 	private ViewRecordManager viewRecordManager;
 	
-
+	private static String separator = System.getProperty("file.separator");
 	// create
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String addItem(HttpServletRequest httpServletRequest,  @RequestParam("file") MultipartFile file) {
@@ -89,8 +89,8 @@ public class ItemController {
 			    fileName2 = httpServletRequest.getSession().getServletContext().getRealPath("/");
 
 
-			    String saveDirectory = dir+"\\webapps\\IDLE\\resources\\images\\";
-					
+			    String saveDirectory = dir+"/webapps/IDLE/resources/images/";
+				saveDirectory = saveDirectory.replace("/", separator);
 				// Create the file on server
 				File serverFile = new File(saveDirectory+name+".png");
 
@@ -98,7 +98,7 @@ public class ItemController {
 						new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
-				item.setPhoto("/app/resources/images/"+name+".png");
+				item.setPhoto("/app/resources/images/".replace("/", separator)+name+".png");
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -204,6 +204,10 @@ public class ItemController {
 		return "redirect:/item/get/"+itemId.toString();
 	}
 	
+//	@RequestMapping(value="/update/{id}", method=RequestMethod.POST)
+//	public String updateItem(HttpServletRequest request) {
+//		
+//	}
 	
 	
 	
