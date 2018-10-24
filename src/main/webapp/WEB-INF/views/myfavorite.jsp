@@ -25,11 +25,11 @@
 
 				<ul class="nav nav-tabs">
 					<li class="nav-item"><a class="nav-link"
-						href="http://localhost:8080/app/personalcenter/personalinfo">Personal
-							Information</a></li>
+						href="http://localhost:8080/app/personalcenter/personalinfo">Profile
+					</a></li>
 					<li class="nav-item"><a class="nav-link "
 						href="http://localhost:8080/app/personalcenter/address">Address
-							Management</a></li>
+					</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/viewhistory">View
 							History</a></li>
@@ -39,6 +39,12 @@
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/mypublished">My
 							Published</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="http://localhost:8080/app/personalcenter/mybought">My
+							Bought</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="http://localhost:8080/app/personalcenter/mysold">My Sold</a>
+					</li>
 				</ul>
 
 				<br />
@@ -59,25 +65,27 @@
 
 							<c:forEach var="favoriteRecord" items="${favoriteRecordlist}"
 								varStatus="loop">
-								
+
 								<tr>
 									<td>${loop.index + 1}</td>
-									<td><a href="http://localhost:8080/app/item/get/${favoriteRecord.item.id}">
-									<img class="mb-2"
-										src="<c:out value='${favoriteRecord.item.photo}'/>" alt=""
-										height="150px" width="180px"></a></td>
+									<td><a
+										href="http://localhost:8080/app/item/get/${favoriteRecord.item.id}">
+											<img class="mb-2"
+											src="<c:out value='${favoriteRecord.item.photo}'/>" alt=""
+											height="150px" width="180px">
+									</a></td>
 									<td>${favoriteRecord.item.name}</td>
 									<td>${favoriteRecord.item.quantity}</td>
 									<td>${favoriteRecord.item.price}</td>
 									<td><a
 										href="http://localhost:8080/app/item/get/${favoriteRecord.item.id}">
 											<span class="fa fa-share"></span>
-									</a> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 
-									<a href="myfavorite/delete/${favoriteRecord.id}"> <span
+									</a> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a
+										href="myfavorite/delete/${favoriteRecord.id}"> <span
 											class="fa fa-remove"
 											onclick="javascript: return confirmDelete()"></span></a></td>
 								</tr>
-								
+
 							</c:forEach>
 						</tbody>
 					</table>
@@ -98,7 +106,8 @@
 </html>
 
 <script> 
-  var result ='<%=request.getParameter("result")%>';
+  var result ='<%=request.getParameter("result")%>
+	';
 	if (result != 'null') {
 		alert(result);
 	}

@@ -25,11 +25,11 @@
 
 				<ul class="nav nav-tabs">
 					<li class="nav-item"><a class="nav-link"
-						href="http://localhost:8080/app/personalcenter/personalinfo">Personal
-							Information</a></li>
+						href="http://localhost:8080/app/personalcenter/personalinfo">Profile
+					</a></li>
 					<li class="nav-item"><a class="nav-link active"
 						href="http://localhost:8080/app/personalcenter/address">Address
-							Management</a></li>
+					</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/viewhistory">View
 							History</a></li>
@@ -39,6 +39,12 @@
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/mypublished">My
 							Published</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="http://localhost:8080/app/personalcenter/mybought">My
+							Bought</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="http://localhost:8080/app/personalcenter/mysold">My Sold</a>
+					</li>
 				</ul>
 
 				<br />

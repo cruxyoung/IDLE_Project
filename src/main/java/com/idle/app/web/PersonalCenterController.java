@@ -163,6 +163,48 @@ public class PersonalCenterController {
 		return "mypublished";
 	}
 	
+	@RequestMapping(value = "mybought", method = RequestMethod.GET)
+	public String myBought(Locale locale, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		HttpSession session = httpServletRequest.getSession();
+		Long userId = (Long) session.getAttribute("userId");
+		if(userId == null) {
+			try {
+				httpServletResponse.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+//		User user = this.userManager.getUserByUserId(userId).getData();
+//		ServerResponse<List<Item>> re = this.itemManager.getItemsByUser(user);
+//		model.addAttribute("itemlist", re.getData());
+//		System.out.println(re.getMsg());
+		return "mybought";
+	}
+	
+	@RequestMapping(value = "mysold", method = RequestMethod.GET)
+	public String mySold(Locale locale, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		HttpSession session = httpServletRequest.getSession();
+		Long userId = (Long) session.getAttribute("userId");
+		if(userId == null) {
+			try {
+				httpServletResponse.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+//		User user = this.userManager.getUserByUserId(userId).getData();
+//		ServerResponse<List<Item>> re = this.itemManager.getItemsByUser(user);
+//		model.addAttribute("itemlist", re.getData());
+//		System.out.println(re.getMsg());
+		return "mysold";
+	}
+	
 	@RequestMapping(value = "modifyuserinfo.do", method = RequestMethod.POST)
 	public String modiftUserInfo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 		String username = httpServletRequest.getParameter("username");

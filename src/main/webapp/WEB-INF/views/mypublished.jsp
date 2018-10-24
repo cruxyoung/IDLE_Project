@@ -11,7 +11,7 @@
 <link
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
-	
+
 </head>
 
 <body>
@@ -25,11 +25,11 @@
 
 				<ul class="nav nav-tabs">
 					<li class="nav-item"><a class="nav-link"
-						href="http://localhost:8080/app/personalcenter/personalinfo">Personal
-							Information</a></li>
+						href="http://localhost:8080/app/personalcenter/personalinfo">Profile
+					</a></li>
 					<li class="nav-item"><a class="nav-link "
 						href="http://localhost:8080/app/personalcenter/address">Address
-							Management</a></li>
+					</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/viewhistory">View
 							History</a></li>
@@ -39,6 +39,12 @@
 					<li class="nav-item"><a class="nav-link active"
 						href="http://localhost:8080/app/personalcenter/mypublished">My
 							Published</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="http://localhost:8080/app/personalcenter/mybought">My
+							Bought</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="http://localhost:8080/app/personalcenter/mysold">My Sold</a>
+					</li>
 				</ul>
 
 				<br />
@@ -60,14 +66,14 @@
 							<c:forEach var="item" items="${itemlist}" varStatus="loop">
 								<tr>
 									<td>${loop.index + 1}</td>
-									<td><img class="mb-2" src="<c:out value='${item.photo}'/>" alt="" height="150px" width="180px"></td>
+									<td><img class="mb-2" src="<c:out value='${item.photo}'/>"
+										alt="" height="150px" width="180px"></td>
 									<td>${item.name}</td>
 									<td>${item.quantity}</td>
 									<td>${item.price}</td>
-									<td><a href="#"><span
-											class="fa fa-pencil"></span></a>
-										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 
-										<a href="http://localhost:8080/app/item/delete/${item.id}"><span
+									<td><a href="#"><span class="fa fa-pencil"></span></a>
+										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a
+										href="http://localhost:8080/app/item/delete/${item.id}"><span
 											class="fa fa-remove"
 											onclick="javascript: return confirmDelete()"></span></a></td>
 								</tr>
@@ -75,7 +81,7 @@
 						</tbody>
 					</table>
 				</div>
-				
+
 			</div>
 
 			<div class="col"></div>
@@ -93,7 +99,8 @@
 
 <script> 
 
-  var result ='<%=request.getParameter("result")%>';
+  var result ='<%=request.getParameter("result")%>
+	';
 	if (result == 'yes') {
 		alert("Delete Successfully!");
 	}
