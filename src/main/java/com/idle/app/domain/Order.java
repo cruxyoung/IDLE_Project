@@ -2,7 +2,6 @@ package com.idle.app.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,11 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Order")
+@Table(name = "t_order")
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -65,6 +63,14 @@ public class Order implements Serializable {
 		this.id = id;
 	}
 
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
 	public User getBuyer() {
 		return buyer;
 	}
@@ -79,6 +85,14 @@ public class Order implements Serializable {
 
 	public void setSeller(User seller) {
 		this.seller = seller;
+	}
+
+	public String getRefundReason() {
+		return refundReason;
+	}
+
+	public void setRefundReason(String refundReason) {
+		this.refundReason = refundReason;
 	}
 
 	public Address getBuyerAddress() {
