@@ -15,7 +15,7 @@ import com.idle.app.domain.Order;
 @Transactional
 public class OrderManager {
 	private SessionFactory sessionFactory;
-	
+	private List<Order> orders;
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sf) {
