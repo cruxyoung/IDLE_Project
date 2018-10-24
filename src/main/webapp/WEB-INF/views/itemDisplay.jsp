@@ -50,10 +50,11 @@ color:red !important;
 <%
 	Long fav = (Long)session.getAttribute("favStatus");
 	if(fav==0){ %>
-		<li><a href="/app/item/changeFav"><span class="fa fa-heart"></a></li>
+		<li><a href="/app/item/changeFav"><span class="fa fa-heart"></a> <a href="/app/item/update/${item.id.intValue()}"><span class="fa fa-pencil"></span></a></li>
 	<% }else { %>
-	<li><a href="/app/item/changeFav"><span class="fa fa-heart red-icon"></a></li>
+	<li><a href="/app/item/changeFav"><span class="fa fa-heart red-icon"></a> <a href="/app/item/update/${item.id.intValue()}"><span class="fa fa-pencil"></span></a></li>
 <% } %>
+<li></li>
 </ul>
 
 <input class="btn btn-primary" type="button" value="Buy it now!">

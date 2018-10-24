@@ -204,12 +204,84 @@ public class ItemController {
 		return "redirect:/item/get/"+itemId.toString();
 	}
 	
-//	@RequestMapping(value="/update/{id}", method=RequestMethod.POST)
-//	public String updateItem(HttpServletRequest request) {
-//		
-//	}
-	
-	
+	@RequestMapping(value="/update/{id}", method=RequestMethod.POST)
+	public String updateItem(@RequestParam("file") MultipartFile file,HttpServletRequest request,@PathVariable("id") Long id) {
+		Item item = itemManager.getItemById(id);
+		System.out.println(item.getId());
+		
+		Category cate = categoryManager.getCateByName(request.getParameter("category"));
+		item.setCategory(cate);
+		item.setName(request.getParameter("name"));
+		item.setQuantity(Long.valueOf(request.getParameter("quantity")));
+		item.setDescription(request.getParameter("description"));
+		item.setPrice(Double.valueOf(request.getParameter("price")));
+		item.setLastEditTime(new Date());
+		
+		
+		
+		if(item.getName().length()==0) item.setName("default"+ new Date().toString());
+		String name = item.getName();
+		if (!file.isEmpty()) {
+			try {
+				byte[] bytes = file.getBytes();
+				
+				// Creating the directory to store file
+				String rootPath = System.getProperty("catalina.home");
+				File dir = new File(rootPath + File.separator );
+				if (!dir.exists())
+					dir.mkdirs();
+				
+				
+				String fileName2 = null;
+			    fileName2 = request.getSession().getServletContext().getRealPath("/");
+
+
+			    String saveDirectory = dir+"/webapps/IDLE/resources/images/";
+				saveDirectory = saveDirectory.replace("/", separator);
+				// Create the file on server
+				File serverFile = new File(saveDirectory+name+".png");
+
+				BufferedOutputStream stream = new BufferedOutputStream(
+						new FileOutputStream(serverFile));
+				stream.write(bytes);
+				stream.close();
+				item.setPhoto("/app/resources/images/".replace("/", separator)+name+".png");
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("You failed to upload " + name
+					+ " because the file was empty.");
+		}
+		itemManager.updateItem(item);
+		System.out.println(item.getDescription());
+		return "redirect:/item/get/"+id.toString();
+		
+	}
+		
+	@RequestMapping(value="/update/{id}", method=RequestMethod.GET)
+	public String updateItem(@PathVariable("id") Long id, HttpSession session,HttpServletResponse response, Model model) {
+		Item item = itemManager.getItemById(id);
+		Long userId = (Long) session.getAttribute("userId");
+		if(item.getOwner().getUserId().equals(userId)) {
+			List<Category> cates = categoryManager.getCategories();
+			model.addAttribute("cates",cates);
+			model.addAttribute("item",item);
+			return "updateItem";
+		}else {
+			try {
+				response.sendRedirect("http://localhost:8080/app/item/get/"+item.getId().toString()+"?error=notAuthorized");
+				return null;
+			}catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
+	}
+
 	
 
 }

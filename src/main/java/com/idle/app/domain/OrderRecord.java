@@ -15,8 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Order")
-public class Order implements Serializable {
+@Table(name = "order_record")
+public class OrderRecord implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
