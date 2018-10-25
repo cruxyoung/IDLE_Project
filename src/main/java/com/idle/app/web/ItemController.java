@@ -87,18 +87,21 @@ public class ItemController {
 				
 				String fileName2 = null;
 			    fileName2 = httpServletRequest.getSession().getServletContext().getRealPath("/");
-
+			    String os = System.getProperty("os.name");
 
 			    String saveDirectory = dir+"/webapps/IDLE/resources/images/";
-				saveDirectory = saveDirectory.replace("/", separator);
+			    if(os.toLowerCase().startsWith("win"))
+			    	saveDirectory = saveDirectory.replace("/", separator);
 				// Create the file on server
 				File serverFile = new File(saveDirectory+name+".png");
-
+//				if (!serverFile.exists()) {
+//					serverFile.mkdirs();
+//				}
 				BufferedOutputStream stream = new BufferedOutputStream(
 						new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
-				item.setPhoto("/app/resources/images/".replace("/", separator)+name+".png");
+					item.setPhoto("/app/resources/images/".replace("/", separator)+name+".png");
 
 			} catch (Exception e) {
 				e.printStackTrace();
