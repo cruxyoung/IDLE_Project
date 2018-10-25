@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,7 +21,9 @@ public class ViewRecordManagerTest extends BaseTest {
 	UserManager userManager;
 	@Autowired
 	public ViewRecordManager viewRecordManager;
+	
 	@Test
+	@Ignore
 	public void testGetRecordsByUser() {
 		User user = this.userManager.getUserByUserId(new Long(3)).getData();
 		List<ViewRecord> records = viewRecordManager.getRecordsByUser(user).getData();
@@ -29,5 +32,25 @@ public class ViewRecordManagerTest extends BaseTest {
 		}
 		
 		assertEquals(3, records.size());
+	}
+	
+	@Test
+	@Ignore
+	public void testgetViewRecordById() {
+		Long viewRecordId = 1L;
+		System.out.println(this.viewRecordManager.getViewRecordById(viewRecordId).getMsg());
+	}
+	
+	@Test
+	@Ignore
+	public void testdeleteViewRecord() {
+		Long viewRecordId = 1L;
+		System.out.println(this.viewRecordManager.deleteViewRecord(viewRecordId).getMsg());
+	}
+	
+	@Test
+	public void testdeleteFavoriteRecord() {
+		Long viewRecordId = 1L;
+		System.out.println(this.viewRecordManager.deleteFavoriteRecord(viewRecordId).getMsg());
 	}
 }

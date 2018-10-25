@@ -51,7 +51,7 @@ public class ItemController {
 	@Autowired
 	private ViewRecordManager viewRecordManager;
 	
-
+	private static String separator = System.getProperty("file.separator");
 	// create
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String addItem(HttpServletRequest httpServletRequest,  @RequestParam("file") MultipartFile file) {
@@ -87,18 +87,21 @@ public class ItemController {
 				
 				String fileName2 = null;
 			    fileName2 = httpServletRequest.getSession().getServletContext().getRealPath("/");
+			    String os = System.getProperty("os.name");
 
-
-			    String saveDirectory = dir+"\\webapps\\IDLE\\resources\\images\\";
-					
+			    String saveDirectory = dir+"/webapps/IDLE/resources/images/";
+			    if(os.toLowerCase().startsWith("win"))
+			    	saveDirectory = saveDirectory.replace("/", separator);
 				// Create the file on server
 				File serverFile = new File(saveDirectory+name+".png");
-
+//				if (!serverFile.exists()) {
+//					serverFile.mkdirs();
+//				}
 				BufferedOutputStream stream = new BufferedOutputStream(
 						new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
-				item.setPhoto("/app/resources/images/"+name+".png");
+					item.setPhoto("/app/resources/images/".replace("/", separator)+name+".png");
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -133,11 +136,14 @@ public class ItemController {
 	}
 
 	// delete
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-	public String deleteItem(@PathVariable("id") Long id) {
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	public void deleteItem(@PathVariable("id") Long id, HttpServletResponse response) {
 		this.itemManager.deleteItem(id);
-		return "delete ok";
-
+		try {
+			response.sendRedirect("http://localhost:8080/app/personalcenter/mypublished?result=yes");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// read
@@ -204,8 +210,115 @@ public class ItemController {
 		return "redirect:/item/get/"+itemId.toString();
 	}
 	
+	@RequestMapping(value="/update/{id}", method=RequestMethod.POST)
+	public String updateItem(@RequestParam("file") MultipartFile file,HttpServletRequest request,@PathVariable("id") Long id) {
+		Item item = itemManager.getItemById(id);
+		System.out.println(item.getId());
+		
+		Category cate = categoryManager.getCateByName(request.getParameter("category"));
+		item.setCategory(cate);
+		item.setName(request.getParameter("name"));
+		item.setQuantity(Long.valueOf(request.getParameter("quantity")));
+		item.setDescription(request.getParameter("description"));
+		item.setPrice(Double.valueOf(request.getParameter("price")));
+		item.setLastEditTime(new Date());
+		
+		
+		
+		if(item.getName().length()==0) item.setName("default"+ new Date().toString());
+		String name = item.getName();
+		if (!file.isEmpty()) {
+			try {
+				byte[] bytes = file.getBytes();
+				
+				// Creating the directory to store file
+				String rootPath = System.getProperty("catalina.home");
+				File dir = new File(rootPath + File.separator );
+				if (!dir.exists())
+					dir.mkdirs();
+				
+				
+				String fileName2 = null;
+			    fileName2 = request.getSession().getServletContext().getRealPath("/");
+
+
+			    String saveDirectory = dir+"/webapps/IDLE/resources/images/";
+				saveDirectory = saveDirectory.replace("/", separator);
+				// Create the file on server
+				File serverFile = new File(saveDirectory+name+".png");
+
+				BufferedOutputStream stream = new BufferedOutputStream(
+						new FileOutputStream(serverFile));
+				stream.write(bytes);
+				stream.close();
+				item.setPhoto("/app/resources/images/".replace("/", separator)+name+".png");
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("You failed to upload " + name
+					+ " because the file was empty.");
+		}
+		itemManager.updateItem(item);
+		System.out.println(item.getDescription());
+		return "redirect:/item/get/"+id.toString();
+		
+	}
+		
+	@RequestMapping(value="/update/{id}", method=RequestMethod.GET)
+	public String updateItem(@PathVariable("id") Long id, HttpSession session,HttpServletResponse response, Model model) {
+		Item item = itemManager.getItemById(id);
+		Long userId = (Long) session.getAttribute("userId");
+		if(item.getOwner().getUserId().equals(userId)) {
+			List<Category> cates = categoryManager.getCategories();
+			model.addAttribute("cates",cates);
+			model.addAttribute("item",item);
+			return "updateItem";
+		}else {
+			try {
+				response.sendRedirect("http://localhost:8080/app/item/get/"+item.getId().toString()+"?error=notAuthorized");
+				return null;
+			}catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
+	}
+	
+	@RequestMapping(value="/update/comment/{id}", method=RequestMethod.GET)
+	public String updateComment(@PathVariable("id") Long commentId, HttpSession session,HttpServletResponse response, Model model) {
+		Long userId = (Long) session.getAttribute("userId");
+		Comment comment = commentManager.getCommentsById(commentId).getData();
+		
+		if(comment.getUser().getUserId().equals(userId)) {
+			model.addAttribute("comment",comment);
+			return "updateComment";
+		}else {
+			try {
+				response.sendRedirect("http://localhost:8080/app/item/get/"+comment.getItem().getId().toString()+"?error=notAuthorized");
+				return null;
+			}catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+	
+	@RequestMapping(value="/update/comment/{id}", method=RequestMethod.POST)
+	public String updateComment(@PathVariable("id") Long commentId, HttpSession session, HttpServletRequest request) {
+		Comment comment = commentManager.getCommentsById(commentId).getData();
+		comment.setContent(request.getParameter("content"));
+		comment.setLastEditTime(new Date());
+		commentManager.updateComment(comment);
+		return "redirect:/item/get/"+comment.getItem().getId().toString();
+		
+	}
 	
 	
+
 	
 
 }

@@ -13,14 +13,21 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.idle.app.common.ServerResponse;
 import com.idle.app.domain.Address;
+import com.idle.app.domain.Item;
+import com.idle.app.domain.Order;
 import com.idle.app.domain.User;
+import com.idle.app.domain.ViewRecord;
 import com.idle.app.service.AddressManager;
+import com.idle.app.service.ItemManager;
+import com.idle.app.service.OrderManager;
 import com.idle.app.service.UserManager;
+import com.idle.app.service.ViewRecordManager;
 
 @Controller
 @RequestMapping(value = "/personalcenter/")
@@ -30,6 +37,15 @@ public class PersonalCenterController {
 	
 	@Autowired
 	private AddressManager addressManager;
+	
+	@Autowired
+	private ItemManager itemManager;
+	
+	@Autowired
+	private ViewRecordManager viewRecordManager;
+	
+	@Autowired
+	private OrderManager orderManager;
 	
 	@RequestMapping(value = "personalinfo", method = RequestMethod.GET)
 	public String personalInfo(Locale locale, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
@@ -70,18 +86,126 @@ public class PersonalCenterController {
 	} 
 	
 	@RequestMapping(value = "viewhistory", method = RequestMethod.GET)
-	public String viewHistory(Locale locale, Model model) {
+	public String viewHistory(Locale locale, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		HttpSession session = httpServletRequest.getSession();
+		Long userId = (Long) session.getAttribute("userId");
+		if(userId == null) {
+			try {
+				httpServletResponse.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		User user = this.userManager.getUserByUserId(userId).getData();
+		ServerResponse<List<ViewRecord>> re = this.viewRecordManager.getRecordsByUser(user);
+		model.addAttribute("viewRecordlist", re.getData());
+//		System.out.println(re.getMsg());
 		return "viewhistory";
 	}  
 	
 	@RequestMapping(value = "myfavorite", method = RequestMethod.GET)
-	public String myFavorite(Locale locale, Model model) {
+	public String myFavorite(Locale locale, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		HttpSession session = httpServletRequest.getSession();
+		Long userId = (Long) session.getAttribute("userId");
+		if(userId == null) {
+			try {
+				httpServletResponse.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		User user = this.userManager.getUserByUserId(userId).getData();
+		ServerResponse<List<ViewRecord>> re = this.viewRecordManager.getFavoriteRecordsByUser(user);
+		model.addAttribute("favoriteRecordlist", re.getData());
+		System.out.println(re.getMsg());
 		return "myfavorite";
 	}  
 	
+	@RequestMapping(value = "myfavorite/delete/{id}", method = RequestMethod.GET)
+	public void deleteMyFavorite(@PathVariable("id") Long viewRecordId, HttpServletResponse response) {
+		ServerResponse<String> re = this.viewRecordManager.deleteFavoriteRecord(viewRecordId);
+		try {
+			response.sendRedirect("http://localhost:8080/app/personalcenter/myfavorite?result="+re.getMsg());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value = "viewhistory/delete/{id}", method = RequestMethod.GET)
+	public void deleteViewhistory(@PathVariable("id") Long viewRecordId, HttpServletResponse response) {
+		ServerResponse<String> re = this.viewRecordManager.deleteViewRecord(viewRecordId);
+		try {
+			response.sendRedirect("http://localhost:8080/app/personalcenter/viewhistory?result="+re.getMsg());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping(value = "mypublished", method = RequestMethod.GET)
-	public String myPublished(Locale locale, Model model) {
+	public String myPublished(Locale locale, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		HttpSession session = httpServletRequest.getSession();
+		Long userId = (Long) session.getAttribute("userId");
+		if(userId == null) {
+			try {
+				httpServletResponse.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		User user = this.userManager.getUserByUserId(userId).getData();
+		ServerResponse<List<Item>> re = this.itemManager.getItemsByUser(user);
+		model.addAttribute("itemlist", re.getData());
+//		System.out.println(re.getMsg());
 		return "mypublished";
+	}
+	
+	@RequestMapping(value = "mybought", method = RequestMethod.GET)
+	public String myBought(Locale locale, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		HttpSession session = httpServletRequest.getSession();
+		Long userId = (Long) session.getAttribute("userId");
+		if(userId == null) {
+			try {
+				httpServletResponse.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		ServerResponse<List<Order>> re = this.orderManager.getAllBoughtOrderByUserId(userId);
+		model.addAttribute("boughtorderlist", re.getData());
+//		System.out.println(re.getMsg());
+		return "mybought";
+	}
+	
+	@RequestMapping(value = "mysold", method = RequestMethod.GET)
+	public String mySold(Locale locale, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		HttpSession session = httpServletRequest.getSession();
+		Long userId = (Long) session.getAttribute("userId");
+		if(userId == null) {
+			try {
+				httpServletResponse.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		ServerResponse<List<Order>> re = this.orderManager.getAllSoldOrderByUserId(userId);
+		model.addAttribute("soldorderlist", re.getData());
+		System.out.println(re.getMsg());
+		return "mysold";
 	}
 	
 	@RequestMapping(value = "modifyuserinfo.do", method = RequestMethod.POST)
@@ -91,6 +215,7 @@ public class PersonalCenterController {
 		String confirmPassword = httpServletRequest.getParameter("confirmpassword");
 		String email = httpServletRequest.getParameter("email");
 		String phone = httpServletRequest.getParameter("phone");
+		
 		
 		if(!password.equals(confirmPassword)) {
 			try {
@@ -104,7 +229,7 @@ public class PersonalCenterController {
 			HttpSession session = httpServletRequest.getSession();
 			Long userId = (Long) session.getAttribute("userId");
 			
-			User user = new User();
+			User user = this.userManager.getUserByUserId(userId).getData();
 			user.setUserId(userId);
 			user.setUserName(username);
 			user.setPassword(password);

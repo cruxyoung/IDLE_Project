@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.idle.app.common.ServerResponse;
+import com.idle.app.domain.Address;
 import com.idle.app.domain.Item;
 import com.idle.app.domain.User;
 import com.idle.app.domain.ViewRecord;
@@ -73,10 +74,64 @@ public class ViewRecordManager {
 //	Query by user
 	public ServerResponse<List<ViewRecord>> getRecordsByUser(User user){
 		if(user==null) return ServerResponse.createByErrorMessage("please specify user");
-		String queryString = "FROM ViewRecord where user.id=:user";
+		String queryString = "FROM ViewRecord where user.id=:user order by lastEditTime Desc";
 		Query query = this.sessionFactory.getCurrentSession().createQuery(queryString);
 		List<ViewRecord> res = query.setParameter("user", user.getUserId()).list();
 		return ServerResponse.createBySuccess("query successfully", res);
+	}
+	
+//	Query by user
+	public ServerResponse<List<ViewRecord>> getFavoriteRecordsByUser(User user){
+		if(user==null) return ServerResponse.createByErrorMessage("please specify user");
+		String queryString = "FROM ViewRecord where user.id=:user and status=1 order by lastEditTime Desc";
+		Query query = this.sessionFactory.getCurrentSession().createQuery(queryString);
+		List<ViewRecord> res = query.setParameter("user", user.getUserId()).list();
+		return ServerResponse.createBySuccess("query successfully", res);
+	}
+	
+	public ServerResponse<String> deleteViewRecord(Long viewRecordId){
+		try {
+			if (viewRecordId == null)
+				return ServerResponse.createByErrorMessage("Can not find address");
+			ViewRecord viewRecord = getViewRecordById(viewRecordId).getData();
+			Session currentSession = this.sessionFactory.getCurrentSession();
+			currentSession.delete(viewRecord);
+			return ServerResponse.createBySuccessMessage("Delete the view record successfully!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.toString());
+			return ServerResponse.createByErrorMessage("fail to delete the view record, caused by: " + e.getMessage());
+		}
+	}
+	public ServerResponse<String> deleteFavoriteRecord(Long viewRecordId){
+		try {
+			if (viewRecordId == null)
+				return ServerResponse.createByErrorMessage("Can not find address");
+			getViewRecordById(viewRecordId);
+			
+			//change the status is enough, means still have the record which is not favorited now
+			Session session = sessionFactory.getCurrentSession();
+			String hql = "update ViewRecord v set v.status=? where v.id=?";
+			Query query = session.createQuery(hql);
+			query.setParameter(0, 0L);
+			query.setParameter(1, viewRecordId);
+			query.executeUpdate();
+			return ServerResponse.createBySuccessMessage("Delete the favorite record successfully!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.toString());
+			return ServerResponse.createByErrorMessage("fail to delete the favorite record, caused by: " + e.getMessage());
+		}
+	}
+
+	public ServerResponse<ViewRecord> getViewRecordById(Long viewRecordId){
+		Session currentSession = this.sessionFactory.getCurrentSession();
+
+		ViewRecord viewRecord = (ViewRecord) currentSession.get(ViewRecord.class, viewRecordId);
+		if (viewRecord == null) {
+			return ServerResponse.createByErrorMessage("Cannot find the viewRecord! Please Reload!");
+		}
+		return ServerResponse.createBySuccess("Get the viewRecord successfully!", viewRecord);
 	}
 	
 //	update lastedittime
@@ -109,4 +164,6 @@ public class ViewRecordManager {
 		ViewRecord res = (ViewRecord)query.setParameter(0, user.getUserId()).setParameter(1, item.getId()).uniqueResult();
 		return ServerResponse.createBySuccess("", res);
 	}
+	
+	
 }

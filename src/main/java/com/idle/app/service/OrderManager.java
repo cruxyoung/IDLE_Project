@@ -1,5 +1,6 @@
 package com.idle.app.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.idle.app.common.ServerResponse;
 import com.idle.app.domain.Order;
 
 @Service(value = "orderManager")
@@ -17,6 +19,9 @@ public class OrderManager {
 	private SessionFactory sessionFactory;
 	private List<Order> orders;
 
+	@Autowired
+	private UserManager userManager;
+	
 	@Autowired
 	public void setSessionFactory(SessionFactory sf) {
 		this.sessionFactory = sf;
@@ -52,4 +57,29 @@ public class OrderManager {
 		this.orders = orders;
 	}
 
+	public ServerResponse<List<Order>> getAllBoughtOrderByUserId(Long userId){
+		List<Order> list  = new ArrayList<Order>();
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("FROM Order a where a.buyer.userId=? order by a.lastEditTime Desc");
+			query.setParameter(0, userId);
+			list = query.list();
+			return ServerResponse.createBySuccess("Get the bought order successfully!", list);
+		} catch (Exception e) {
+			return ServerResponse.createByErrorMessage(e.getMessage());
+		}
+	}
+	
+	public ServerResponse<List<Order>> getAllSoldOrderByUserId(Long userId){
+		List<Order> list  = new ArrayList<Order>();
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("FROM Order a where a.seller.userId=? order by a.lastEditTime Desc");
+			query.setParameter(0, userId);
+			list = query.list();
+			return ServerResponse.createBySuccess("Get the seller order successfully!", list);
+		} catch (Exception e) {
+			return ServerResponse.createByErrorMessage(e.getMessage());
+		}
+	}
 }

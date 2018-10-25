@@ -2,16 +2,16 @@
 
 <html>
 <head>
-<title>My Published</title>
+<title>My Sold</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>My Published</title>
+<title>My Sold</title>
 <link href="<c:url value="/resources/css/bootstrap.css" />"
 	rel="stylesheet" type="text/css" />
+
 <link
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
-
 </head>
 
 <body>
@@ -27,22 +27,21 @@
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/personalinfo">Profile
 					</a></li>
-					<li class="nav-item"><a class="nav-link "
+					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/address">Address
 					</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="http://localhost:8080/app/personalcenter/viewhistory">View
+					<li class="nav-item"><a class="nav-link" href="#">View
 							History</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/myfavorite">My
 							Favorite</a></li>
-					<li class="nav-item"><a class="nav-link active"
+					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/mypublished">My
 							Published</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="http://localhost:8080/app/personalcenter/mybought">My
 							Bought</a></li>
-					<li class="nav-item"><a class="nav-link"
+					<li class="nav-item"><a class="nav-link active"
 						href="http://localhost:8080/app/personalcenter/mysold">My Sold</a>
 					</li>
 				</ul>
@@ -56,34 +55,41 @@
 								<th class="seq">Id</th>
 								<th>Item Photo</th>
 								<th>Item Name</th>
-								<th>Item Quantity</th>
 								<th>Item Price</th>
+								<th>Buyer</th>
+								<th>Order Status</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 
-							<c:forEach var="item" items="${itemlist}" varStatus="loop">
+							<c:forEach var="soldorder" items="${soldorderlist}"
+								varStatus="loop">
 								<tr>
 									<td>${loop.index + 1}</td>
 									<td><a
-										href="http://localhost:8080/app/item/get/${item.id}">
-									<img class="mb-2" src="<c:out value='${item.photo}'/>"
-										alt="" height="150px" width="180px"></a></td>
-									<td>${item.name}</td>
-									<td>${item.quantity}</td>
-									<td>${item.price}</td>
-									<td><a href="http://localhost:8080/app/item/update/${item.id}"><span class="fa fa-pencil"></span></a>
-										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a
-										href="http://localhost:8080/app/item/delete/${item.id}"><span
-											class="fa fa-remove"
-											onclick="javascript: return confirmDelete()"></span></a></td>
+										href="http://localhost:8080/app/item/get/${soldorder.item.id}">
+											<img class="mb-2"
+											src="<c:out value='${soldorder.item.photo}'/>" alt=""
+											height="150px" width="180px">
+									</a></td>
+									<td>${soldorder.item.name}</td>
+									<td>${soldorder.item.price}</td>
+									<td>${soldorder.buyer.userName}</td>
+									<td><c:if test="${soldorder.orderStatus== 0}">In Transaction</c:if>
+										<c:if test="${soldorder.orderStatus== 1}">Transaction Finish</c:if>
+										<c:if test="${soldorder.orderStatus== 2}">Refunding</c:if>
+										<c:if test="${soldorder.orderStatus== 3}">Refund finish</c:if>
+										<c:if test="${soldorder.orderStatus== 4}">Refund Refused</c:if></td>
+									<td><a
+										href="http://localhost:8080/app/order/orderConfirm/${soldorder.id}"><span
+											class="fa fa-share"></span></a>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
-
 			</div>
 
 			<div class="col"></div>
@@ -100,10 +106,10 @@
 </html>
 
 <script> 
-
-  var result ='<%=request.getParameter("result")%>';
-	if (result == 'yes') {
-		alert("Delete Successfully!");
+  var result ='<%=request.getParameter("result")%>
+	';
+	if (result != 'null') {
+		alert(result);
 	}
 </script>
 <script type="text/javascript">

@@ -31,7 +31,7 @@ color:red !important;
 
 
 <div class="row">
-<div class="col-6 col-md"></span></div>
+<div class="col-6 col-md"></div>
 <div class="col-6 col-md">
 <img class="mb-2" src="<c:out value='${item.photo}'/>" alt="" height="300px" width="300px">
 
@@ -39,24 +39,26 @@ color:red !important;
 <div class="col-6 col-md">
 <ul class="list-unstyled">
 
-<li><h3>item name: <c:out value='${item.name}'/></h3></li>
-<li><h3>item description: <c:out value='${item.description}'/></h3>  </li>
-<li><h3>item owner: <c:out value='${item.owner.getUserName()}'/></h3>  </li>
-<li><h3>item quantity: <c:out value='${item.quantity}'/></h3>  </li>
+<li><h4>Name: <c:out value='${item.name}'/></h4></li>
+<li><h4>Description: <c:out value='${item.description}'/></h4>  </li>
+<li><h4>Owner: <c:out value='${item.owner.getUserName()}'/></h4>  </li>
+<li><h4>Quantity: <c:out value='${item.quantity}'/></h4>  </li>
+<li><h4>Price: $<c:out value='${item.price}'/></h4>  </li>
 
 
 
-<li><h3>item Category: <c:out value='${item.category.categoryName}'/></h3>
+<li><h4>Category: <c:out value='${item.category.categoryName}'/></h4></li>
 <%
 	Long fav = (Long)session.getAttribute("favStatus");
 	if(fav==0){ %>
-		<li><a href="/app/item/changeFav"><span class="fa fa-heart"></a></li>
+		<li><a href="/app/item/changeFav"><span class="fa fa-heart"></span></a>&nbsp&nbsp <a href="/app/item/update/${item.id.intValue()}"><span class="fa fa-pencil"></span></a></li>
 	<% }else { %>
-	<li><a href="/app/item/changeFav"><span class="fa fa-heart red-icon"></a></li>
+	<li><a href="/app/item/changeFav"><span class="fa fa-heart red-icon"></span></a>&nbsp&nbsp <a href="/app/item/update/${item.id.intValue()}"><span class="fa fa-pencil"></span></a></li>
 <% } %>
+<li></li>
 </ul>
 
-<input class="btn btn-primary" type="button" value="Buy it now!">
+<a href="/app/order/createorder/${item.id.intValue()}"><input class="btn btn-primary" type="button" value="Buy it now!"></a>
 
 
 </div>
@@ -73,7 +75,6 @@ color:red !important;
 
 <div class="container-fluid">
 	<jsp:include page="footer.jsp" flush="true"/>
-	
 </div>
 
 

@@ -75,7 +75,7 @@ public class ItemManager {
 			Session currentSession = this.sessionFactory.getCurrentSession();
 			Item item = (Item) currentSession.get(Item.class, id);
 			currentSession.delete(item);
-			return ServerResponse.createBySuccess();
+			return ServerResponse.createBySuccessMessage("Delete successfully!");
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println(e.toString());
@@ -92,8 +92,8 @@ public class ItemManager {
 			if (item == null || item.getId() == null) {
 				return ServerResponse.createByErrorMessage("cannot find item");
 			}
-
 			Session currentSession = this.sessionFactory.getCurrentSession();
+
 			currentSession.merge(item);
 			return ServerResponse.createBySuccess();
 		}catch(TransactionException e){
@@ -140,7 +140,7 @@ public class ItemManager {
 		if(user==null) return ServerResponse.createByErrorMessage("specify your user!");
 		try {
 			Session currentSession = this.sessionFactory.getCurrentSession();
-			String queryString = "from item where owner.userId=:user";
+			String queryString = "from Item where owner.userId=:user order by lastEditTime Desc";
 			Query query = this.sessionFactory.getCurrentSession().createQuery(queryString);
 			List<Item> res = query.setParameter("user", user.getUserId()).list();
 			return ServerResponse.createBySuccess("query success",res);

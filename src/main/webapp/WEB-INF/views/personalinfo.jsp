@@ -9,6 +9,10 @@
 <link href="<c:url value="/resources/css/bootstrap.css" />"
 	rel="stylesheet" type="text/css" />
 
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+	
 </head>
 
 <body>
@@ -22,10 +26,10 @@
 
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link active" href="http://localhost:8080/app/personalcenter/personalinfo">Personal Information</a>
+    <a class="nav-link active" href="http://localhost:8080/app/personalcenter/personalinfo">Profile</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="http://localhost:8080/app/personalcenter/address">Address Management</a>
+    <a class="nav-link" href="http://localhost:8080/app/personalcenter/address">Address</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="http://localhost:8080/app/personalcenter/viewhistory">View History</a>
@@ -35,6 +39,12 @@
   </li>
   <li class="nav-item">
     <a class="nav-link" href="http://localhost:8080/app/personalcenter/mypublished">My Published</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="http://localhost:8080/app/personalcenter/mybought">My Bought</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="http://localhost:8080/app/personalcenter/mysold">My Sold</a>
   </li>
 </ul>
 
@@ -69,9 +79,9 @@
 <div class="col-6">
 <form class="form-topup" action="topup.do" method="POST">
 	<br/>
-    <label for="originalbalance">Your Balance: ${user.balance}</label>
+    <label for="originalbalance">Your Balance: <span class="fa fa-usd"></span> ${user.balance}</label>
     <br/><br/>
-    <input name="balance" type="text" id="balance" class="form-control" placeholder="Enter the how much you want to charge..." required autofocus>
+    <input name="balance" type="text" id="balance" class="form-control" placeholder="Enter how much you want to charge..." required autofocus>
     <br/>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Top Up</button>
 </form>

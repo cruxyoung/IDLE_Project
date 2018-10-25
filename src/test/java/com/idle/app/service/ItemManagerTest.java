@@ -22,14 +22,15 @@ public class ItemManagerTest extends BaseTest {
 	@Resource(name = "itemManager")
 	private ItemManager itemManager;
 
-	@Resource(name="userManager")
+	@Resource(name = "userManager")
 	UserManager userManager;
-	
+
 	@Before
 	public void setUp() throws Exception {
+		itemManager.deleteAllItems("Item");
 		User user = new User();
-		userManager.addUser(user );
-		
+		userManager.addUser(user);
+
 		Item item = new Item();
 		item.setName("testItem");
 		item.setCreateTime(new Date());
@@ -72,7 +73,7 @@ public class ItemManagerTest extends BaseTest {
 	@Test
 	public void testDeleteItem() {
 		Item item = itemManager.getItemByName("testItem");
-		
+
 		itemManager.deleteItem(item.getId());
 		assertEquals(0, itemManager.getItems().size());
 	}
@@ -92,8 +93,6 @@ public class ItemManagerTest extends BaseTest {
 		assertEquals(item.getName(), item.getName());
 	}
 
-	
-
 	@After
 	public void deleteAllItemsAttheEndofTest() {
 		itemManager.deleteAllItems("Item");
@@ -101,4 +100,9 @@ public class ItemManagerTest extends BaseTest {
 
 	}
 
+	// @Test
+	// public void testGetItemsByUser() {
+	// User user = this.userManager.getUserByUserId(1L).getData();
+	// System.out.println(this.itemManager.getItemsByUser(user).getMsg());
+	// }
 }

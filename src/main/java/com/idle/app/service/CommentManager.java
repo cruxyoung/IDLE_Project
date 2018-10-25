@@ -89,6 +89,26 @@ public class CommentManager  {
 		}
 	}
 	
+//	Update
+	@Transactional
+	public ServerResponse<String> updateComment(Comment comment){
+		try {
+			if(comment==null) return ServerResponse.createByError();
+			Session currentSession = this.sessionFactory.getCurrentSession();
+			currentSession.merge(comment);
+			return ServerResponse.createBySuccess();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ServerResponse.createByError();
+	}
 	
+	public ServerResponse<Comment> getCommentByUser(User user){
+		Session currentSession = this.sessionFactory.getCurrentSession();
+		String queryString = "from Comment where user.id=:user";
+		Query query = currentSession.createQuery(queryString);
+		Comment res = (Comment) query.setParameter("user", user.getUserId());
+		return ServerResponse.createBySuccess("",res);
+	}
 	
 }

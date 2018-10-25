@@ -9,55 +9,108 @@
 <link href="<c:url value="/resources/css/bootstrap.css" />"
 	rel="stylesheet" type="text/css" />
 
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
 </head>
 
 <body>
-<jsp:include page="header.jsp" flush="true"/>
+	<jsp:include page="header.jsp" flush="true" />
 
-<div class="container-fluid">
-<div class="row">
-<div class="col"></div> 
-<!-- <div class="col-6 col-md"></div> -->
-<div class="col-8">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col"></div>
+			<!-- <div class="col-6 col-md"></div> -->
+			<div class="col-8">
 
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link" href="http://localhost:8080/app/personalcenter/personalinfo">Personal Information</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link " href="http://localhost:8080/app/personalcenter/address">Address Management</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" href="#">View History</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="http://localhost:8080/app/personalcenter/myfavorite">My Favorite</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="http://localhost:8080/app/personalcenter/mypublished">My Published</a>
-  </li>
-</ul>
+				<ul class="nav nav-tabs">
+					<li class="nav-item"><a class="nav-link"
+						href="http://localhost:8080/app/personalcenter/personalinfo">Profile
+					</a></li>
+					<li class="nav-item"><a class="nav-link "
+						href="http://localhost:8080/app/personalcenter/address">Address
+					</a></li>
+					<li class="nav-item"><a class="nav-link active" href="#">View
+							History</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="http://localhost:8080/app/personalcenter/myfavorite">My
+							Favorite</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="http://localhost:8080/app/personalcenter/mypublished">My
+							Published</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="http://localhost:8080/app/personalcenter/mybought">My
+							Bought</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="http://localhost:8080/app/personalcenter/mysold">My Sold</a>
+					</li>
+				</ul>
 
-</div>
+				<br />
 
-<div class="col"></div>
-</div>
-</div>
+				<div class="row margin-top-20">
+					<table class="table">
+						<thead>
+							<tr>
+								<th class="seq">Id</th>
+								<th>Item Photo</th>
+								<th>Item Name</th>
+								<th>Item Quantity</th>
+								<th>Item Price</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
 
-<div class="container-fluid">
-	<jsp:include page="footer.jsp" flush="true"/>
-	
-</div>
+							<c:forEach var="viewRecord" items="${viewRecordlist}"
+								varStatus="loop">
+								<tr>
+									<td>${loop.index + 1}</td>
+									<td><a
+										href="http://localhost:8080/app/item/get/${viewRecord.item.id}">
+											<img class="mb-2"
+											src="<c:out value='${viewRecord.item.photo}'/>" alt=""
+											height="150px" width="180px">
+									</a></td>
+									<td>${viewRecord.item.name}</td>
+									<td>${viewRecord.item.quantity}</td>
+									<td>${viewRecord.item.price}</td>
+									<td><a
+										href="http://localhost:8080/app/item/get/${viewRecord.item.id}"><span
+											class="fa fa-share"></span></a>
+										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a
+										href="viewhistory/delete/${viewRecord.id}"><span
+											class="fa fa-remove"
+											onclick="javascript: return confirmDelete()"></span></a></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="col"></div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<jsp:include page="footer.jsp" flush="true" />
+
+	</div>
 
 </body>
 
 </html>
 
 <script> 
-
-//取出传回来的参数error并与yes比较
-  var errori ='<%=request.getParameter("error")%>';
-  if(errori=='yes'){
-   alert("Wrong username or password!");
-  }
+  var result ='<%=request.getParameter("result")%>';
+	if (result != 'null') {
+		alert(result);
+	}
+</script>
+<script type="text/javascript">
+	function confirmDelete() {
+		var result = confirm("Are you sure to delete it?");
+		return result;
+	}
 </script>

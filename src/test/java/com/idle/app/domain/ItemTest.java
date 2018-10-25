@@ -1,15 +1,13 @@
 package com.idle.app.domain;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.idle.app.BaseTest;
 
 
 public class ItemTest extends BaseTest{
-	private Item item;
+	private Item item=new Item();
 	
-	protected void setUp() throws Exception{
-		item =new Item();
-	}
 	
 	@Test
 	public void testSetAndGetName() {
@@ -18,7 +16,7 @@ public class ItemTest extends BaseTest{
         item.setName(name);
         assertEquals(name, item.getName());
     }	
-	
+	@Test
 	public void testSetAndGetDescription() {
 		String desc="this is a Description";
 		assertNull(item.getDescription());
