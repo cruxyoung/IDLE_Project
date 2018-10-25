@@ -100,6 +100,7 @@ public class UserController {
 		return null;
 	}
 	
+	//unused
 	@RequestMapping(value = "modifyuserinfo.do", method = RequestMethod.POST)
 	public String modiftUserInfo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 		String username = httpServletRequest.getParameter("username");
@@ -107,7 +108,19 @@ public class UserController {
 		String confirmPassword = httpServletRequest.getParameter("confirmpassword");
 		String email = httpServletRequest.getParameter("email");
 		String phone = httpServletRequest.getParameter("phone");
-		
+	
+		HttpSession session = httpServletRequest.getSession();
+		Long userId = (Long) session.getAttribute("userId");
+		if(userId == null) {
+			try {
+				httpServletResponse.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		User user = this.userManager.getUserByUserId(userId).getData();
 		
 		if(!password.equals(confirmPassword)) {
 			try {
@@ -118,8 +131,8 @@ public class UserController {
 			}
 			return null;
 		}else {
-			User user = new User();
 			
+			user.setBalance(user.getBalance());
 			user.setUserName(username);
 			user.setPassword(password);
 			user.setEmail(email);

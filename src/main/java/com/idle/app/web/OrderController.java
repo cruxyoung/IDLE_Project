@@ -1,10 +1,12 @@
 package com.idle.app.web;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -52,9 +54,9 @@ public class OrderController {
 
 	// create
 	@RequestMapping(value = "/payNow", method = RequestMethod.POST)
-	public String addOrder(HttpServletRequest request, HttpSession session, Model model) {
+	public String addOrder(HttpServletRequest request, HttpSession session, Model model, HttpServletResponse httpServletResponse) {
 		String addressId = request.getParameter("address");
-		User buyer = (User) session.getAttribute("CURRENTUSER");
+		User buyer = this.userManager.getUserByUserId((Long) session.getAttribute("userId")).getData();
 		Item item = itemManager.getItemById(Long.parseLong(request.getParameter("itemId")));
 		User seller = userManager.getUserByUserId(item.getOwner().getUserId()).getData();
 		Address buyerAddress = addressManager.getAddressById(Long.parseLong(addressId)).getData();
@@ -71,7 +73,14 @@ public class OrderController {
 		this.orderManager.addOrder(order);
 		item.setQuantity(item.getQuantity() - 1);
 		this.itemManager.updateItem(item);
-		return "redirect:/order/get/" + order.getId();
+//		return "redirect:/order/get/" + order.getId();
+		try {
+			httpServletResponse.sendRedirect("http://localhost:8080/app/personalcenter/mybought");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	// delete
@@ -102,7 +111,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/orderConfirm", method = RequestMethod.POST)
-	public String orderConfirm(Model model, HttpServletRequest request) {
+	public String orderConfirm(Model model, HttpServletRequest request, HttpServletResponse httpServletResponse) {
 		String orderId = request.getParameter("orderId");
 		Order order = this.orderManager.getOrderByOrderId(Integer.parseInt(orderId));
 		order.setOrderStatus(1L);
@@ -116,7 +125,15 @@ public class OrderController {
 		seller.setLastEditTime(new Date());
 		seller.setBalance(seller.getBalance() + order.getItem().getPrice());
 		userManager.updateUser(seller);
-		return "redirect:/order/get/" + order.getId();
+//		return "redirect:/order/get/" + order.getId();
+		
+		try {
+			httpServletResponse.sendRedirect("http://localhost:8080/app/personalcenter/mysold");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@RequestMapping(value = "/orderRefund/{orderId}", method = RequestMethod.GET)
@@ -144,7 +161,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/refundConfirm", method = RequestMethod.POST)
-	public String refundConfirm(HttpSession session, Model model, HttpServletRequest request) {
+	public String refundConfirm(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse httpServletResponse) {
 		String orderId = request.getParameter("orderId");
 		String operation = request.getParameter("operation");
 		Order order = this.orderManager.getOrderByOrderId(Integer.parseInt(orderId));
@@ -163,6 +180,13 @@ public class OrderController {
 		}
 		order.setLastEditTime(new Date());
 		this.orderManager.updateOrder(order);
-		return "redirect:/order/get/" + order.getId();
+//		return "redirect:/order/get/" + order.getId();
+		try {
+			httpServletResponse.sendRedirect("http://localhost:8080/app/order/orderConfirm/"+orderId);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

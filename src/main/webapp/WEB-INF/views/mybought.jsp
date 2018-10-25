@@ -55,33 +55,36 @@
 								<th class="seq">Id</th>
 								<th>Item Photo</th>
 								<th>Item Name</th>
-								<th>Item Quantity</th>
 								<th>Item Price</th>
+								<th>Seller</th>
+								<th>Order Status</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 
-							<c:forEach var="viewRecord" items="${viewRecordlist}"
+							<c:forEach var="boughtorder" items="${boughtorderlist}"
 								varStatus="loop">
 								<tr>
 									<td>${loop.index + 1}</td>
 									<td><a
-										href="http://localhost:8080/app/item/get/${viewRecord.item.id}">
+										href="http://localhost:8080/app/item/get/${boughtorder.item.id}">
 											<img class="mb-2"
-											src="<c:out value='${viewRecord.item.photo}'/>" alt=""
+											src="<c:out value='${boughtorder.item.photo}'/>" alt=""
 											height="150px" width="180px">
 									</a></td>
-									<td>${viewRecord.item.name}</td>
-									<td>${viewRecord.item.quantity}</td>
-									<td>${viewRecord.item.price}</td>
+									<td>${boughtorder.item.name}</td>
+									<td>${boughtorder.item.price}</td>
+									<td>${boughtorder.seller.userName}</td>
+									<td><c:if test="${boughtorder.orderStatus== 0}">In Transaction</c:if>
+										<c:if test="${boughtorder.orderStatus== 1}">Transaction Finish</c:if>
+										<c:if test="${boughtorder.orderStatus== 2}">Refunding</c:if>
+										<c:if test="${boughtorder.orderStatus== 3}">Refund finish</c:if>
+										<c:if test="${boughtorder.orderStatus== 4}">Refund Refused</c:if></td>
 									<td><a
-										href="http://localhost:8080/app/item/get/${viewRecord.item.id}"><span
+										href="http://localhost:8080/app/order/get/${boughtorder.id}"><span
 											class="fa fa-share"></span></a>
-										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a
-										href="viewhistory/delete/${viewRecord.id}"><span
-											class="fa fa-remove"
-											onclick="javascript: return confirmDelete()"></span></a></td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -103,7 +106,8 @@
 </html>
 
 <script> 
-  var result ='<%=request.getParameter("result")%>';
+  var result ='<%=request.getParameter("result")%>
+	';
 	if (result != 'null') {
 		alert(result);
 	}
