@@ -140,7 +140,7 @@ public class ItemManager {
 		if(user==null) return ServerResponse.createByErrorMessage("specify your user!");
 		try {
 			Session currentSession = this.sessionFactory.getCurrentSession();
-			String queryString = "from Item where owner.userId=:user";
+			String queryString = "from Item where owner.userId=:user order by lastEditTime Desc";
 			Query query = this.sessionFactory.getCurrentSession().createQuery(queryString);
 			List<Item> res = query.setParameter("user", user.getUserId()).list();
 			return ServerResponse.createBySuccess("query success",res);

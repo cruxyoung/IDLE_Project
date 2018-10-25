@@ -58,7 +58,7 @@ color:red !important;
 <li></li>
 </ul>
 
-<input class="btn btn-primary" type="button" value="Buy it now!">
+<a href="/app/order/createorder/${item.id.intValue()}"><input class="btn btn-primary" type="button" value="Buy it now!"></a>
 
 
 </div>
