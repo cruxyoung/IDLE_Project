@@ -110,8 +110,7 @@
 <script> 
 
 //取出传回来的参数error并与yes比较
-  var updateresult ='<%=request.getParameter("updateresult")%>
-	';
+  var updateresult ='<%=request.getParameter("updateresult")%>';
 	if (updateresult != 'null') {
 		alert(updateresult);
 	}

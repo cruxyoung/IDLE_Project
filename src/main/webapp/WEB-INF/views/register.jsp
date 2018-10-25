@@ -59,7 +59,6 @@
 
 <div class="container-fluid">
 	<jsp:include page="footer.jsp" flush="true"/>
-	
 </div>
 
 

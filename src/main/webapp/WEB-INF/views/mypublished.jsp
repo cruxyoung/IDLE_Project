@@ -99,8 +99,7 @@
 
 <script> 
 
-  var result ='<%=request.getParameter("result")%>
-	';
+  var result ='<%=request.getParameter("result")%>';
 	if (result == 'yes') {
 		alert("Delete Successfully!");
 	}

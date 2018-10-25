@@ -1,6 +1,10 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <div class="container-fluid">
 <div class="row">
+
+	<jsp:include page="header.jsp" flush="true"/>
+	
+
     <div class="col-sm">
       
     </div>
@@ -39,9 +43,8 @@
     <div class="col-sm">
       
     </div>
+    
+	<jsp:include page="footer.jsp" flush="true" />
+
   </div>
-
-		
-
-
-	</div>
+</div>

@@ -58,6 +58,8 @@
 	
 	
 	<jsp:include page="footer.jsp" flush="true" />
+
+	
 <script type="text/javascript">
 var errori='<%=request.getParameter("error")%>';
 if(errori=='notAuthorized'){
