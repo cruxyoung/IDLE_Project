@@ -41,8 +41,9 @@ public class OrderController {
 	@RequestMapping(value = "/createorder/{id}", method = RequestMethod.GET)
 	public String item(@PathVariable("id") Long id, Model model, HttpSession session) {
 		Item item = itemManager.getItemById(id);
-		User currentUser = (User) session.getAttribute("CURRENTUSER");
-		List<Address> addressList = addressManager.getAllAddressByUserId(currentUser.getUserId()).getData();
+		Long userId = (Long)session.getAttribute("userId");
+		User currentUser = this.userManager.getUserByUserId(userId).getData();
+		List<Address> addressList = addressManager.getAllAddressByUserId(userId).getData();
 		model.addAttribute("addressList", addressList);
 		model.addAttribute("item", item);
 		model.addAttribute("user", currentUser);

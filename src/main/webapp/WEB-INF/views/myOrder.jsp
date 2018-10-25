@@ -18,17 +18,9 @@
 <link href="resources/css/order.css" rel="stylesheet" type="text/css" />
 </head>
 <body onload="load()">
+	<jsp:include page="header.jsp" flush="true" />
 	<form action="order/payNow.do" method="post" onsubmit='return payNow()'>
-		<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-			<h5 class="my-0 mr-md-auto font-weight-normal">IDLE</h5>
-			<nav class="my-2 my-md-0 mr-md-3">
-				<a class="p-2 text-dark" href="/app/">Home</a> <a
-					class="p-2 text-dark" href="/app/item/add">Publish Item</a> <a
-					class="p-2 text-dark" href="#">Personal Center</a> <a
-					class="p-2 text-dark" href="/app/login">Login</a>
-			</nav>
-			<a class="btn btn-outline-primary" href="#">Sign up</a>
-		</div>
+		
 		<div class="container">
 			<div class="row wrapper">
 				<div class="col-md">
