@@ -66,12 +66,14 @@
 							<c:forEach var="item" items="${itemlist}" varStatus="loop">
 								<tr>
 									<td>${loop.index + 1}</td>
-									<td><img class="mb-2" src="<c:out value='${item.photo}'/>"
-										alt="" height="150px" width="180px"></td>
+									<td><a
+										href="http://localhost:8080/app/item/get/${item.id}">
+									<img class="mb-2" src="<c:out value='${item.photo}'/>"
+										alt="" height="150px" width="180px"></a></td>
 									<td>${item.name}</td>
 									<td>${item.quantity}</td>
 									<td>${item.price}</td>
-									<td><a href="#"><span class="fa fa-pencil"></span></a>
+									<td><a href="http://localhost:8080/app/item/update/${item.id}"><span class="fa fa-pencil"></span></a>
 										&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a
 										href="http://localhost:8080/app/item/delete/${item.id}"><span
 											class="fa fa-remove"

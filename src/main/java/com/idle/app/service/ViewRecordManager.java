@@ -74,7 +74,7 @@ public class ViewRecordManager {
 //	Query by user
 	public ServerResponse<List<ViewRecord>> getRecordsByUser(User user){
 		if(user==null) return ServerResponse.createByErrorMessage("please specify user");
-		String queryString = "FROM ViewRecord where user.id=:user";
+		String queryString = "FROM ViewRecord where user.id=:user order by lastEditTime Desc";
 		Query query = this.sessionFactory.getCurrentSession().createQuery(queryString);
 		List<ViewRecord> res = query.setParameter("user", user.getUserId()).list();
 		return ServerResponse.createBySuccess("query successfully", res);
@@ -83,7 +83,7 @@ public class ViewRecordManager {
 //	Query by user
 	public ServerResponse<List<ViewRecord>> getFavoriteRecordsByUser(User user){
 		if(user==null) return ServerResponse.createByErrorMessage("please specify user");
-		String queryString = "FROM ViewRecord where user.id=:user and status=1";
+		String queryString = "FROM ViewRecord where user.id=:user and status=1 order by lastEditTime Desc";
 		Query query = this.sessionFactory.getCurrentSession().createQuery(queryString);
 		List<ViewRecord> res = query.setParameter("user", user.getUserId()).list();
 		return ServerResponse.createBySuccess("query successfully", res);

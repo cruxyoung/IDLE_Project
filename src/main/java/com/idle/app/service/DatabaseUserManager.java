@@ -87,14 +87,16 @@ public class DatabaseUserManager implements UserManager {
 
 			Session session = sessionFactory.getCurrentSession();
 			// session.beginTransaction();
-			String hql = "update User u set u.userName=?, u.email=?, u.phone=?, u.lastEditTime=?, u.password=? where u.userId=?";
+			String hql = "update User u set u.userName=?, u.email=?, u.phone=?, u.lastEditTime=?, u.password=?, u.balance=? where u.userId=?";
 			Query query = session.createQuery(hql);
 			query.setParameter(0, user.getUserName());
 			query.setParameter(1, user.getEmail());
 			query.setParameter(2, user.getPhone());
 			query.setParameter(3, new Date());
 			query.setParameter(4, user.getPassword());
-			query.setParameter(5, user.getUserId());
+			query.setParameter(5, user.getBalance());
+			query.setParameter(6, user.getUserId());
+			
 			query.executeUpdate();
 			// session.getTransaction().commit();
 			return ServerResponse.createBySuccessMessage("Update Information successfully!");

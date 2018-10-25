@@ -56,12 +56,12 @@ public class DatabaseUserManagerTest extends BaseTest {
 	}
 
 	@Test
-	@Ignore
+//	@Ignore
 	public void testUpdateUser() {
 		User user = new User();
 		user.setUserId(1L);
 
-		user.setBalance(4.0);
+		user.setBalance(70.0);
 		user.setEmail("4@1.com");
 		user.setPhone("411111");
 		user.setUserName("updateTest4");
