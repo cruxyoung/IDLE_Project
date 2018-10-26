@@ -37,6 +37,9 @@ public class Item implements Serializable {
 	@OneToMany(mappedBy="item",cascade=CascadeType.ALL)
 	List<ViewRecord> viewRecords;
 	
+	@OneToMany(mappedBy="item",cascade=CascadeType.ALL)
+	 List<Order> order;
+	
 	@Column(name="item_photo")
 	private String photo;
 

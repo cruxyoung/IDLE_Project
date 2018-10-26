@@ -14,14 +14,10 @@ public class DatabaseUserManagerTest extends BaseTest {
 
 	@Autowired
 	private UserManager userManager;
-	
-//	@Resource(name = "userManager")
-//	UserManager userManager;
 
 	@Test
 	@Ignore
 	public void testAdd() {
-		// DatabaseUserManager databaseUserManager = new DatabaseUserManager();
 
 		User user = new User();
 		user.setBalance(100.0);
@@ -32,31 +28,27 @@ public class DatabaseUserManagerTest extends BaseTest {
 		user.setUserName("testnew");
 		user.setPhone("12345");
 		this.userManager.add(user);
-		// System.out.println(response.getMsg());
-
 	}
 
 	@Test
 	@Ignore
 	public void testAddUser() {
-		// DatabaseUserManager databaseUserManager = new DatabaseUserManager();
-
 		User user = new User();
 		user.setBalance(100.0);
 		user.setCreateTime(new Date());
 		user.setLastEditTime(new Date());
-		user.setEmail("xili@qq.com");
+		user.setEmail("xili@qqq.com");
 		user.setPassword("123");
-		user.setUserName("lixinnn");
-		user.setPhone("1234333566");
+		user.setUserName("lixinli");
+		user.setPhone("12343335966");
 		ServerResponse<String> re = this.userManager.addUser(user);
 		System.out.println(re.getMsg());
-		// assertEquals(0, re.getStatus());
+		assertEquals(0, re.getStatus());
 
 	}
 
 	@Test
-//	@Ignore
+	@Ignore
 	public void testUpdateUser() {
 		User user = new User();
 		user.setUserId(1L);
@@ -68,6 +60,7 @@ public class DatabaseUserManagerTest extends BaseTest {
 
 		ServerResponse<String> re = this.userManager.updateUser(user);
 		System.out.println(re.getMsg());
+		assertEquals(0, re.getStatus());
 	}
 
 	@Test
@@ -76,6 +69,7 @@ public class DatabaseUserManagerTest extends BaseTest {
 		String username = "3testnew";
 		ServerResponse<String> re = this.userManager.checkUsername(username);
 		System.out.println(re.getMsg() + " " + re.getStatus());
+		assertEquals(0, re.getStatus());
 	}
 
 	@Test
@@ -84,22 +78,46 @@ public class DatabaseUserManagerTest extends BaseTest {
 		String email = "3new@qq.com";
 		ServerResponse<String> re = this.userManager.checkEmail(email);
 		System.out.println(re.getMsg() + " " + re.getStatus());
+		assertEquals(0, re.getStatus());
 	}
-	
+
 	@Test
 	@Ignore
 	public void testLogin() {
 		String username = "test3";
 		String password = "123";
 		ServerResponse<?> re = this.userManager.login(username, password);
-		System.out.println(re.getMsg()+ " " + re.getStatus());
+		System.out.println(re.getMsg() + " " + re.getStatus());
+		assertEquals(0, re.getStatus());
 	}
-	
+
 	@Test
+	@Ignore
 	public void testGetUserByUserId() {
 		Long userId = 1L;
 		ServerResponse<User> re = this.userManager.getUserByUserId(userId);
 		System.out.println(re.getData().getUserName());
-		System.out.println(re.getMsg()+ " " + re.getStatus());
+		System.out.println(re.getMsg() + " " + re.getStatus());
+		assertEquals(0, re.getStatus());
+	}
+
+	@Test
+	@Ignore
+	public void testDeleteUser() {
+		Long userId = 27L;
+		ServerResponse<String> re = this.userManager.deleteUser(userId);
+		System.out.println(re.getMsg() + " " + re.getStatus());
+		assertEquals(0, re.getStatus());
+
+	}
+
+	@Test
+	public void testUpdateBalance() {
+		User user = new User();
+		user.setUserId(23L);
+		user.setBalance(20.0); // the balance to top up
+		ServerResponse<String> re = this.userManager.updateBalance(user);
+		System.out.println(re.getMsg() + " " + re.getStatus());
+		assertEquals(0, re.getStatus());
 	}
 }

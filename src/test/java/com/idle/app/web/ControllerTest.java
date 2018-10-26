@@ -63,8 +63,8 @@ public class ControllerTest {
 
 	@Test
 	public void testDisplayItemPageWithSession() throws Exception {
-		sessionattr.put("userId", new Long(1));
-		String response = mockMvc.perform(get("/item/get/1").sessionAttrs(sessionattr)).andExpect(status().isOk())
+		sessionattr.put("userId", 1L);
+		String response = mockMvc.perform(get("/item/get/10").sessionAttrs(sessionattr)).andExpect(status().isOk())
 				.andDo(print()).andReturn().getResponse().getContentAsString();
 	}
 

@@ -12,11 +12,11 @@ import com.idle.app.common.ServerResponse;
 import com.idle.app.domain.Address;
 import com.idle.app.domain.User;
 
-public class DatabaseAddressManagerTest extends BaseTest{
+public class DatabaseAddressManagerTest extends BaseTest {
 
 	@Autowired
 	private AddressManager addressmanager;
-	
+
 	@Test
 	@Ignore
 	public void testAddAddress() {
@@ -29,12 +29,12 @@ public class DatabaseAddressManagerTest extends BaseTest{
 		User user = new User();
 		user.setUserId(16L);
 		address.setUser(user);
-		
+
 		ServerResponse<String> re = this.addressmanager.addAddress(address);
-		System.out.println(re.getStatus()+"\n" +re.getMsg());
-		
+		System.out.println(re.getStatus() + "\n" + re.getMsg());
+		assertEquals(0, re.getStatus());
 	}
-	
+
 	@Test
 	@Ignore
 	public void testUpdateAddress() {
@@ -44,26 +44,37 @@ public class DatabaseAddressManagerTest extends BaseTest{
 		address.setReceiverName("Cong Linnnn");
 		address.setReceiverPhone("0410611196");
 		address.setLastEditTime(new Date());
-		
+
 		ServerResponse<String> re = this.addressmanager.updateAddress(address);
-		System.out.println(re.getStatus()+"\n" +re.getMsg());
+		System.out.println(re.getStatus() + "\n" + re.getMsg());
+		assertEquals(0, re.getStatus());
 	}
-	
+
 	@Test
 	@Ignore
 	public void testGetAllAddressByUserId() {
 		Long userId = 1L;
 		ServerResponse<List<Address>> re = this.addressmanager.getAllAddressByUserId(userId);
-		for(Address ad: re.getData()) {
+		for (Address ad : re.getData()) {
 			System.out.println(ad.getReceiverName());
 		}
+		assertEquals(0, re.getStatus());
 	}
-	
+
 	@Test
-//	@Ignore
+	@Ignore
 	public void testDeleteAddress() {
 		Long addressId = 14L;
 		ServerResponse<String> re = this.addressmanager.deleteAddress(addressId);
-		System.out.println(re.getStatus()+"\n" +re.getMsg());
+		System.out.println(re.getStatus() + "\n" + re.getMsg());
+		assertEquals(0, re.getStatus());
+	}
+
+	@Test
+	public void testGetAddressById() {
+		Long addressId = 19L;
+		ServerResponse<Address> re = this.addressmanager.getAddressById(addressId);
+		System.out.println(re.getStatus() + "\n" + re.getMsg() + "\n" + re.getData().getAddress());
+		assertEquals(0, re.getStatus());
 	}
 }

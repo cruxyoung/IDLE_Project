@@ -19,9 +19,6 @@ import com.idle.app.domain.User;
 @Transactional
 public class DatabaseUserManager implements UserManager {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private SessionFactory sessionFactory;
 
@@ -164,8 +161,13 @@ public class DatabaseUserManager implements UserManager {
 	@Transactional
 	public ServerResponse<String> deleteUser(Long userId) {
 		try {
-			// todo delete user
-
+			if(userId == null)
+				return ServerResponse.createByErrorMessage("The userId is null");
+			Session currentSession = this.sessionFactory.getCurrentSession();
+			User user = (User)currentSession.get(User.class, userId);
+			currentSession.delete(user);
+			return ServerResponse.createBySuccessMessage("Delete successfully!");
+			
 		} catch (TransactionException e) {
 			throw new RuntimeException("delete user error:" + e.getMessage());
 		} catch (Exception e) {
@@ -174,7 +176,6 @@ public class DatabaseUserManager implements UserManager {
 			return ServerResponse.createByError();
 
 		}
-		return null;
 	}
 
 	@Override
@@ -215,6 +216,9 @@ public class DatabaseUserManager implements UserManager {
 		return ServerResponse.createBySuccess("Get the user successfully!", user);
 	}
 
+	/**
+	 * top up the balance
+	 */
 	@Override
 	public ServerResponse<String> updateBalance(User user) {
 		if (user == null || user.getUserId() == null) {
