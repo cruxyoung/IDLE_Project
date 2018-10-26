@@ -71,7 +71,7 @@ public class ViewRecordManager {
 		
 	}
 	
-//	Query by user
+//	Query the view records by user
 	public ServerResponse<List<ViewRecord>> getRecordsByUser(User user){
 		if(user==null) return ServerResponse.createByErrorMessage("please specify user");
 		String queryString = "FROM ViewRecord where user.id=:user order by lastEditTime Desc";
@@ -80,7 +80,7 @@ public class ViewRecordManager {
 		return ServerResponse.createBySuccess("query successfully", res);
 	}
 	
-//	Query by user
+//	Query the favorite records by user
 	public ServerResponse<List<ViewRecord>> getFavoriteRecordsByUser(User user){
 		if(user==null) return ServerResponse.createByErrorMessage("please specify user");
 		String queryString = "FROM ViewRecord where user.id=:user and status=1 order by lastEditTime Desc";
@@ -103,6 +103,12 @@ public class ViewRecordManager {
 			return ServerResponse.createByErrorMessage("fail to delete the view record, caused by: " + e.getMessage());
 		}
 	}
+	
+	/**
+	 * delete the favorite record, just modify the status from 1 to 0
+	 * @param viewRecordId
+	 * @return
+	 */
 	public ServerResponse<String> deleteFavoriteRecord(Long viewRecordId){
 		try {
 			if (viewRecordId == null)

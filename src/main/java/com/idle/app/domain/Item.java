@@ -50,14 +50,14 @@ public class Item implements Serializable {
 	private String description;
 
 	@Column(name="visit_time")
-	private Date visit_time;
+	private Long visit_time;
 
 	@Column(name="item_price")
 	private Double price;
 
 	@Column(name="item_priority")
 	private Integer priority;
-	// wait a secon
+	// wait a second
 
 	@ManyToOne(cascade=CascadeType.DETACH)
     @JoinColumn(name="owner_id")
@@ -105,11 +105,11 @@ public class Item implements Serializable {
 		this.description = description;
 	}
 
-	public Date getVisit_time() {
+	public Long getVisit_time() {
 		return visit_time;
 	}
 
-	public void setVisit_time(Date visit_time) {
+	public void setVisit_time(Long visit_time) {
 		this.visit_time = visit_time;
 	}
 
@@ -153,6 +153,10 @@ public class Item implements Serializable {
 		this.lastEditTime = lastEditTime;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public Long getId() {
 		return id;
 	}

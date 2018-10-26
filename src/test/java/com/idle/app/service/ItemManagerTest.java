@@ -39,7 +39,7 @@ public class ItemManagerTest extends BaseTest {
 		item.setPrice(10.0);
 		item.setPriority(null);
 		item.setQuantity(10);
-		item.setVisit_time(new Date());
+		item.setVisit_time(20L);
 		item.setLastEditTime(new Date());
 		item.setOwner(user);
 		this.itemManager.addItem(item);
