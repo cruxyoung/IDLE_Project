@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.idle.app.common.ServerResponse;
 import com.idle.app.domain.Address;
 import com.idle.app.domain.Item;
+import com.idle.app.domain.Order;
 import com.idle.app.domain.User;
 import com.idle.app.domain.ViewRecord;
 import com.idle.app.service.AddressManager;
 import com.idle.app.service.ItemManager;
+import com.idle.app.service.OrderManager;
 import com.idle.app.service.UserManager;
 import com.idle.app.service.ViewRecordManager;
 
@@ -41,6 +43,9 @@ public class PersonalCenterController {
 	
 	@Autowired
 	private ViewRecordManager viewRecordManager;
+	
+	@Autowired
+	private OrderManager orderManager;
 	
 	@RequestMapping(value = "personalinfo", method = RequestMethod.GET)
 	public String personalInfo(Locale locale, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
@@ -177,9 +182,8 @@ public class PersonalCenterController {
 			return null;
 		}
 		
-//		User user = this.userManager.getUserByUserId(userId).getData();
-//		ServerResponse<List<Item>> re = this.itemManager.getItemsByUser(user);
-//		model.addAttribute("itemlist", re.getData());
+		ServerResponse<List<Order>> re = this.orderManager.getAllBoughtOrderByUserId(userId);
+		model.addAttribute("boughtorderlist", re.getData());
 //		System.out.println(re.getMsg());
 		return "mybought";
 	}
@@ -198,10 +202,9 @@ public class PersonalCenterController {
 			return null;
 		}
 		
-//		User user = this.userManager.getUserByUserId(userId).getData();
-//		ServerResponse<List<Item>> re = this.itemManager.getItemsByUser(user);
-//		model.addAttribute("itemlist", re.getData());
-//		System.out.println(re.getMsg());
+		ServerResponse<List<Order>> re = this.orderManager.getAllSoldOrderByUserId(userId);
+		model.addAttribute("soldorderlist", re.getData());
+		System.out.println(re.getMsg());
 		return "mysold";
 	}
 	
@@ -212,6 +215,7 @@ public class PersonalCenterController {
 		String confirmPassword = httpServletRequest.getParameter("confirmpassword");
 		String email = httpServletRequest.getParameter("email");
 		String phone = httpServletRequest.getParameter("phone");
+		
 		
 		if(!password.equals(confirmPassword)) {
 			try {
@@ -225,7 +229,7 @@ public class PersonalCenterController {
 			HttpSession session = httpServletRequest.getSession();
 			Long userId = (Long) session.getAttribute("userId");
 			
-			User user = new User();
+			User user = this.userManager.getUserByUserId(userId).getData();
 			user.setUserId(userId);
 			user.setUserName(username);
 			user.setPassword(password);

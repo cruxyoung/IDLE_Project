@@ -1,18 +1,26 @@
 package com.idle.app.domain;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.idle.app.BaseTest;
 
 
-public class ItemTest extends TestCase{
-	private Item item;
+public class ItemTest extends BaseTest{
+	private Item item=new Item();
 	
-	protected void setUp() throws Exception{
-		item =new Item();
-	}
 	
-	public void testSetAndGetDescription() {
+	@Test
+	public void testSetAndGetName() {
         String name = "aDescription";
         assertNull(item.getName());
         item.setName(name);
         assertEquals(name, item.getName());
     }	
+	@Test
+	public void testSetAndGetDescription() {
+		String desc="this is a Description";
+		assertNull(item.getDescription());
+		item.setDescription(desc);
+		assertEquals(desc, item.getDescription());
+	}
 }
