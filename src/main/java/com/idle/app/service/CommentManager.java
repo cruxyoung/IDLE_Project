@@ -103,11 +103,11 @@ public class CommentManager  {
 		return ServerResponse.createByError();
 	}
 	
-	public ServerResponse<Comment> getCommentByUser(User user){
+	public ServerResponse<List<Comment>> getCommentByUser(User user){
 		Session currentSession = this.sessionFactory.getCurrentSession();
 		String queryString = "from Comment where user.id=:user";
 		Query query = currentSession.createQuery(queryString);
-		Comment res = (Comment) query.setParameter("user", user.getUserId());
+		List<Comment> res = query.setParameter("user", user.getUserId()).list();
 		return ServerResponse.createBySuccess("",res);
 	}
 	

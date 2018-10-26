@@ -50,7 +50,7 @@ public class ItemManager {
 
 	}
 
-	private ServerResponse<String> checkItemName(String itemName) {
+	public ServerResponse<String> checkItemName(String itemName) {
 		try {
 			Query query = this.sessionFactory.getCurrentSession().createQuery("from Item it where it.name=? ");
 			query.setString(0, itemName);
