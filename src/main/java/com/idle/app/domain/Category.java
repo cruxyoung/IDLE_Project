@@ -1,4 +1,5 @@
 package com.idle.app.domain;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,22 +13,22 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="category")
+@Table(name = "category")
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
-	@Column(name="category_id")
+	@Column(name = "category_id")
 	private Long categoryId;
-	
-	@Column(name="category_name")
+
+	@Column(name = "category_name")
 	private String categoryName;
-	
-	@Column(name="create_time")
-    private Date createTime;
-	
-	@Column(name="last_edit_time")
-    private Date lastEditTime;
+
+	@Column(name = "create_time")
+	private Date createTime;
+
+	@Column(name = "last_edit_time")
+	private Date lastEditTime;
 
 	public Long getCategoryId() {
 		return categoryId;
@@ -60,9 +61,5 @@ public class Category implements Serializable {
 	public void setLastEditTime(Date lastEditTime) {
 		this.lastEditTime = lastEditTime;
 	}
-	
-	
-	
-	
 
 }

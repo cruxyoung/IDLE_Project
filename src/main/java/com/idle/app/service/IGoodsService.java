@@ -2,11 +2,11 @@ package com.idle.app.service;
 
 import java.util.List;
 
-import com.shop.web.entity.GoodsEntity;
+import com.idle.app.domain.Item;
 
 public interface IGoodsService
 {
-	List<GoodsEntity> findbySearch(String type, String name, String sort);
-	List<GoodsEntity> findBanner();
+	List<Item> findbySearch(String type, String name, String sort);
+	List<Item> findBanner();
 
 }
