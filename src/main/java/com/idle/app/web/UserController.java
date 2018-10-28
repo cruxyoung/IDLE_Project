@@ -23,7 +23,7 @@ public class UserController {
 	private UserManager userManager;
 	
 	@RequestMapping(value = "login.do", method = RequestMethod.POST)
-	public String login(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public String login(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
 		String username = httpServletRequest.getParameter("username");
 		String password = httpServletRequest.getParameter("password");
 		ServerResponse<User> response = userManager.login(username, password);
@@ -34,26 +34,30 @@ public class UserController {
 			HttpSession session = httpServletRequest.getSession();
 			session.setAttribute("username", user.getUserName());
 			session.setAttribute("userId", user.getUserId());
-			return "main";
+			httpServletResponse.sendRedirect("http://localhost:8080/app/home");
+			return null;
 		}
 			
 		else {
 			try {
+//				httpServletResponse.sendRedirect("http://localhost:8080/app/home");
 				httpServletResponse.sendRedirect("login?error=yes");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			return "login";
 		}
 	}
 	
 	@RequestMapping(value = "signout", method = RequestMethod.GET)
-	public String signout(HttpServletRequest httpServletRequest) {
+	public String signout(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws Exception {
 		HttpSession session = httpServletRequest.getSession();
 		session.removeAttribute("username");
 		session.removeAttribute("userId");
-		return "main";
+		httpServletResponse.sendRedirect("http://localhost:8080/app/home");
+		return null;
 	}
 	
 	@RequestMapping(value = "register.do", method = RequestMethod.POST)

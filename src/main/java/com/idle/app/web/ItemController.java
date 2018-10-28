@@ -156,12 +156,13 @@ public class ItemController {
 		if(item!=null)
 			session.setAttribute("itemId", id);
 		Long userId = (Long)session.getAttribute("userId");
+		
 		if(userId!=null) {
 			this.viewRecordManager.addRecord(item, this.userManager.getUserByUserId(userId).getData());
+			ViewRecord record = this.viewRecordManager.getRecord(item, userManager.getUserByUserId(userId).getData()).getData();
+			session.setAttribute("favStatus", record.getStatus());
 		}
 		
-		ViewRecord record = this.viewRecordManager.getRecord(item, userManager.getUserByUserId(userId).getData()).getData();
-		session.setAttribute("favStatus", record.getStatus());
 		model.addAttribute("item", item);
 		List<Comment> comments = commentManager.getCommentsByItem(item).getData();
 		model.addAttribute("comments", comments);
