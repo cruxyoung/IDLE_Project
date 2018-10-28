@@ -166,6 +166,7 @@ public class ItemController {
 		model.addAttribute("item", item);
 		List<Comment> comments = commentManager.getCommentsByItem(item).getData();
 		model.addAttribute("comments", comments);
+		session.setAttribute("favStatus", new Long(0));
 		if (item == null)
 			System.out.println("get no itm");
 		return "itemDisplay";
@@ -173,18 +174,27 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value="/comment/add", method= RequestMethod.POST)
-	public String addComment(HttpServletRequest httpServletRequest,HttpSession session) {
+	public String addComment(HttpServletRequest httpServletRequest,HttpSession session, HttpServletResponse response) throws Exception {
 		Long itemId = (Long)session.getAttribute("itemId");
 		Item item = itemManager.getItemById(itemId);
 		String content = httpServletRequest.getParameter("content");
+		Long userId = (Long)session.getAttribute("userId");
+		if(userId==null) {
+			response.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+			return null;
+		}
 		User user = userManager.getUserByUserId((Long)session.getAttribute("userId")).getData();
 		commentManager.addComments(content, item, user);
 		return "redirect:/item/get/"+itemId.toString();
 		
 	}
 	@RequestMapping(value="/get/comment/delete/{id}", method= RequestMethod.GET)
-	public String deleteComment(@PathVariable("id") Long id, HttpSession session,HttpServletResponse response) {
+	public String deleteComment(@PathVariable("id") Long id, HttpSession session,HttpServletResponse response) throws Exception{
 		Long userId = (Long) session.getAttribute("userId");
+		if(userId==null) {
+			response.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+			return null;
+		}
 		Long itemId = (Long)session.getAttribute("itemId");
 		Comment com = commentManager.getCommentsById(id).getData();
 		if(com.getUser().getUserId().equals(userId)) {
@@ -203,9 +213,15 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value="/changeFav", method = RequestMethod.GET)
-	public String changeFav(HttpServletResponse response, HttpSession session) {
+	public String changeFav(HttpServletResponse response, HttpSession session) throws Exception {
 		Long userId = (Long) session.getAttribute("userId");
+		if(userId==null) {
+			response.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+		}
 		Long itemId = (Long)session.getAttribute("itemId");
+		if(userId==null) {
+			response.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+		}
 		
 		
 		viewRecordManager.changeFavStatus(itemManager.getItemById(itemId), userManager.getUserByUserId(userId).getData());
@@ -269,9 +285,12 @@ public class ItemController {
 	}
 		
 	@RequestMapping(value="/update/{id}", method=RequestMethod.GET)
-	public String updateItem(@PathVariable("id") Long id, HttpSession session,HttpServletResponse response, Model model) {
+	public String updateItem(@PathVariable("id") Long id, HttpSession session,HttpServletResponse response, Model model) throws Exception {
 		Item item = itemManager.getItemById(id);
 		Long userId = (Long) session.getAttribute("userId");
+		if(userId==null) {
+			response.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+		}
 		if(item.getOwner().getUserId().equals(userId)) {
 			List<Category> cates = categoryManager.getCategories();
 			model.addAttribute("cates",cates);
@@ -291,8 +310,11 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value="/update/comment/{id}", method=RequestMethod.GET)
-	public String updateComment(@PathVariable("id") Long commentId, HttpSession session,HttpServletResponse response, Model model) {
+	public String updateComment(@PathVariable("id") Long commentId, HttpSession session,HttpServletResponse response, Model model) throws Exception{
 		Long userId = (Long) session.getAttribute("userId");
+		if(userId==null) {
+			response.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+		}
 		Comment comment = commentManager.getCommentsById(commentId).getData();
 		
 		if(comment.getUser().getUserId().equals(userId)) {

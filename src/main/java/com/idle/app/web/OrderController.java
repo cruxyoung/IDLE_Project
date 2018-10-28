@@ -41,9 +41,13 @@ public class OrderController {
 	private DatabaseAddressManager addressManager;
 
 	@RequestMapping(value = "/createorder/{id}", method = RequestMethod.GET)
-	public String item(@PathVariable("id") Long id, Model model, HttpSession session) {
+	public String item(@PathVariable("id") Long id, Model model, HttpSession session, HttpServletResponse response) throws Exception{
 		Item item = itemManager.getItemById(id);
 		Long userId = (Long)session.getAttribute("userId");
+		if(userId==null) {
+			response.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
+			return null;
+		}
 		User currentUser = this.userManager.getUserByUserId(userId).getData();
 		List<Address> addressList = addressManager.getAllAddressByUserId(userId).getData();
 		model.addAttribute("addressList", addressList);
