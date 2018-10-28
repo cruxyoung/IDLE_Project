@@ -106,8 +106,7 @@
 </html>
 
 <script> 
-  var result ='<%=request.getParameter("result")%>
-	';
+  var result ='<%=request.getParameter("result")%>';
 	if (result != 'null') {
 		alert(result);
 	}

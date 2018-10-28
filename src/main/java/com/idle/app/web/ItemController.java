@@ -165,6 +165,7 @@ public class ItemController {
 		
 		model.addAttribute("item", item);
 		List<Comment> comments = commentManager.getCommentsByItem(item).getData();
+		session.setAttribute("favStatus", new Long(0));
 		model.addAttribute("comments", comments);
 		if (item == null)
 			System.out.println("get no itm");
