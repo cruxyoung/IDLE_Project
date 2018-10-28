@@ -58,7 +58,7 @@
 			<el-col :md="12" :offset="6">
 			<div>
 			<a :href="'/app/item/get/'+item.id">
-				<img style="max-width: 100%; max-height: 100%;"
+				<img style="width: 100%; height: 100%;"
 					:title="item.description" :alt="item.description" :src="item.photo"></a>
 			</div>
 			</el-col>
@@ -76,51 +76,51 @@
 		</el-row> <el-row>
 		<div
 			style="float: left; width: 20%; box-shadow: 0 0 3px 3px #d3dce6; height: 300px;">
-			<a :href="'/app/item/get/'+goods[0].id"><img style="max-width: 100%; max-height: 100%;"
-				:title="goods[0].description" alt="" :src="goods[0].photo" /></a>
+			<a :href="'/app/item/get/'+goods[0].id"><img style="width: 100%; height: 100%;"
+				:title="goods[0].description" alt="" :src="goods[0].photo"  /></a>
 		</div>
 		 <div
 			style="float: left; width: 24%; box-shadow: 0 0 3px 3px #d3dce6; height: 300px; margin-left: 2%">
 			<a :href="'/app/item/get/'+goods[1].id">
-			<img style="max-width: 100%; max-height: 100%;"
+			<img style="width: 100%; height: 100%;"
 				:title="goods[1].description" alt="" :src="goods[1].photo" /></a>
 		</div>
 		<div
 		
 			style="float: left; width: 35%; box-shadow: 0 0 3px 3px #d3dce6; height: 300px; margin-left: 2%">
 			<a :href="'/app/item/get/'+goods[2].id">
-			<img style="max-width: 100%; max-height: 100%;"
+			<img style="width: 100%; height: 100%;"
 				:title="goods[2].description" alt="" :src="goods[2].photo" /></a>
 		</div>
 		<div
 			style="float: left; width: 15%; box-shadow: 0 0 3px 3px #d3dce6; height: 300px; margin-left: 2%">
 			<a :href="'/app/item/get/'+goods[3].id">
-			<img style="max-width: 100%; max-height: 100%;"
+			<img style="width: 100%; height: 100%;"
 				:title="goods[3].description" alt="" :src="goods[3].photo" /></a>
 		</div>
 		</el-row> <el-row>
 		<div
 			style="float: left; width: 15%; box-shadow: 0 0 3px 3px #d3dce6; height: 300px; margin-left: 2%">
 			<a :href="'/app/item/get/'+goods[4].id">
-			<img style="max-width: 100%; max-height: 100%;"
+			<img style="width: 100%; height: 100%;"
 				:title="goods[4].description" alt="" :src="goods[4].photo" /></a>
 		</div>
 		<div
 			style="float: left; width: 35%; box-shadow: 0 0 3px 3px #d3dce6; height: 300px; margin-left: 2%">
 			<a :href="'/app/item/get/'+goods[5].id">
-			<img style="max-width: 100%; max-height: 100%;"
+			<img style="width: 100%; height: 100%;"
 				:title="goods[5].description" alt="" :src="goods[5].photo" /></a>
 		</div>
 		<div
 			style="float: left; width: 24%; box-shadow: 0 0 3px 3px #d3dce6; height: 300px; margin-left: 2%">
 			<a :href="'/app/item/get/'+goods[6].id">
-			<img style="max-width: 100%; max-height: 100%;"
+			<img style="width: 100%; height: 100%;"
 				:title="goods[6].description" alt="" :src="goods[6].photo" /></a>
 		</div>
 		<div
 			style="float: left; width: 20%; box-shadow: 0 0 3px 3px #d3dce6; height: 300px;">
 			<a :href="'/app/item/get/'+goods[7].id">
-			<img style="max-width: 100%; max-height: 100%;"
+			<img style="width: 100%; height: 100%;"
 				:title="goods[7].description" alt="" :src="goods[7].photo" /></a>
 		</div>
 		</el-row> <el-row> <el-col :span="24">
