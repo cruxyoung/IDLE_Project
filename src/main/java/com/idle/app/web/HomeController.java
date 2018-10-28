@@ -31,7 +31,7 @@ public class HomeController
 		model.addAttribute("banners",
 				JSONArray.fromObject(GoodsServiceImpl.findBanner()));
 		model.addAttribute("goods", JSONArray.fromObject(
-				GoodsServiceImpl.findbySearch(null, "", "createTime")));
+				GoodsServiceImpl.findbySearch("", "", "createTime")));
 		return "home";
 	}
 	

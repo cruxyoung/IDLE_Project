@@ -38,9 +38,10 @@ public class GoodsServiceImpl implements IGoodsService {
 			list = query.setMaxResults(8).list();
 
 		} else if(StringUtils.isEmpty(type)&&StringUtils.isEmpty(name)) {
-			sql = "from Item order by " + sort ;
+			sql = "from Item order by " + sort+" desc" ;
 			Query query = session.createQuery(sql);
 			list = query.setMaxResults(8).list();
+			System.out.println(sort);
 		}
 		else {
 			System.out.println(sql);

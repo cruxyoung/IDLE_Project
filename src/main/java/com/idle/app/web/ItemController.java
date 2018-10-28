@@ -115,7 +115,7 @@ public class ItemController {
 		
 		this.itemManager.addItem(item);
 //		redirect to main page(to be implemented)
-		return "redirect:/";
+		return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
