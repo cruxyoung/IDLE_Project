@@ -266,12 +266,22 @@ public class PersonalCenterController {
 		user.setUserId(userId);
 		user.setBalance(Double.valueOf(balance));
 		ServerResponse<String> response = this.userManager.updateBalance(user);
-		try {
-			httpServletResponse.sendRedirect("personalinfo?updateresult="+response.getMsg());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		Long itemIdforTopup = (Long)session.getAttribute("itemIdforTopup");
+		if(itemIdforTopup != null) {
+			try {
+				httpServletResponse.sendRedirect("http://localhost:8080/app/order/createorder/"+itemIdforTopup);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			try {
+				httpServletResponse.sendRedirect("personalinfo?updateresult="+response.getMsg());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		
 	}
 	
 	public static boolean isNumeric(String str){

@@ -42,6 +42,7 @@ public class OrderController {
 
 	@RequestMapping(value = "/createorder/{id}", method = RequestMethod.GET)
 	public String item(@PathVariable("id") Long id, Model model, HttpSession session, HttpServletResponse response) throws Exception{
+		session.setAttribute("itemIdforTopup", id);
 		Item item = itemManager.getItemById(id);
 		Long userId = (Long)session.getAttribute("userId");
 		if(userId==null) {
@@ -83,6 +84,7 @@ public class OrderController {
 //		return "redirect:/order/get/" + order.getId();
 		try {
 			httpServletResponse.sendRedirect("http://localhost:8080/app/personalcenter/mybought");
+			session.removeAttribute("itemIdforTopup");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
