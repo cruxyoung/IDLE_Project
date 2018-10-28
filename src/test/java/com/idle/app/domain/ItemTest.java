@@ -53,9 +53,9 @@ public class ItemTest extends BaseTest {
 	@Test
 	public void testSetAndGetVisitTime() {
 		Long visitTime = 10L;
-		assertNull(item.getVisit_time());
-		item.setVisit_time(visitTime);
-		assertEquals(visitTime, item.getVisit_time());
+		assertNull(item.getVisitTime());
+		item.setVisitTime(visitTime);
+		assertEquals(visitTime, item.getVisitTime());
 	}
 
 	@Test

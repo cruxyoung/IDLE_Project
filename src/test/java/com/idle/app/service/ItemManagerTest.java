@@ -29,22 +29,23 @@ public class ItemManagerTest extends BaseTest {
 	@Before
 	@Ignore
 	public void setUp() throws Exception {
-		// itemManager.deleteAllItems("Item");
-		// User user = new User();
-		// userManager.addUser(user);
-		//
-		// Item item = new Item();
-		// item.setName("testItem");
-		// item.setCreateTime(new Date());
-		// item.setDescription("fak");
-		// item.setOwner(user);
-		// item.setPrice(10.0);
-		// item.setPriority(null);
-		// item.setQuantity(10);
-		// item.setVisit_time(20L);
-		// item.setLastEditTime(new Date());
-		// item.setOwner(user);
-		// this.itemManager.addItem(item);
+
+		itemManager.deleteAllItems("Item");
+		User user = new User();
+		userManager.addUser(user);
+
+		Item item = new Item();
+		item.setName("testItem");
+		item.setCreateTime(new Date());
+		item.setDescription("fak");
+		item.setOwner(user);
+		item.setPrice(10.0);
+		item.setPriority(null);
+		item.setQuantity(new Long(10));
+		item.setLastEditTime(new Date());
+		item.setOwner(user);
+		this.itemManager.addItem(item);
+
 	}
 
 	@Test

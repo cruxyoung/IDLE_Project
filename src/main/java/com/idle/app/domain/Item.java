@@ -17,6 +17,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Item")
 public class Item implements Serializable {
+	
+
 	/**
 	 * 
 	 */
@@ -37,20 +39,23 @@ public class Item implements Serializable {
 	@OneToMany(mappedBy="item",cascade=CascadeType.ALL)
 	List<ViewRecord> viewRecords;
 	
+
 	@OneToMany(mappedBy="item",cascade=CascadeType.ALL)
 	 List<Order> order;
+
 	
 	@Column(name="item_photo")
 	private String photo;
 
 	@Column(name="item_quantity")
-	private long quantity;
+	private Long quantity;
 
 	@Column(name="item_description")
 	private String description;
 
-	@Column(name="visit_time")
-	private Long visit_time;
+
+	
+
 
 	@Column(name="item_price")
 	private Double price;
@@ -72,6 +77,29 @@ public class Item implements Serializable {
 	
 	@Column(name="last_edit_time")
     private Date lastEditTime;
+	
+	@Column(name="isbanner")
+	private String isbanner;
+	
+	@Column(name="visit_time")
+	private Long visitTime;
+	
+
+	public Long getVisitTime() {
+		return visitTime;
+	}
+
+	public void setVisitTime(Long visitTime) {
+		this.visitTime = visitTime;
+	}
+
+	public String getIsbanner() {
+		return isbanner;
+	}
+
+	public void setIsbanner(String isbanner) {
+		this.isbanner = isbanner;
+	}
 
 	public String getName() {
 		return name;
@@ -93,7 +121,7 @@ public class Item implements Serializable {
 		return quantity;
 	}
 
-	public void setQuantity(long quantity) {
+	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
 
@@ -105,13 +133,9 @@ public class Item implements Serializable {
 		this.description = description;
 	}
 
-	public Long getVisit_time() {
-		return visit_time;
-	}
 
-	public void setVisit_time(Long visit_time) {
-		this.visit_time = visit_time;
-	}
+
+
 
 	public Double getPrice() {
 		return price;
@@ -169,6 +193,14 @@ public class Item implements Serializable {
 		this.category = category;
 	}
 	
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", name=" + name + ", comments=" + comments + ", viewRecords=" + viewRecords
+				+ ", order=" + order + ", photo=" + photo + ", quantity=" + quantity + ", description=" + description
+				+ ", price=" + price + ", priority=" + priority + ", owner=" + owner + ", category=" + category
+				+ ", createTime=" + createTime + ", lastEditTime=" + lastEditTime + ", isbanner=" + isbanner
+				+ ", visitTime=" + visitTime + "]";
+	}
 	
 	
 }

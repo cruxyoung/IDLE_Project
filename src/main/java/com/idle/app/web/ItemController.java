@@ -159,6 +159,7 @@ public class ItemController {
 		if(userId!=null) {
 			this.viewRecordManager.addRecord(item, this.userManager.getUserByUserId(userId).getData());
 		}
+		
 		ViewRecord record = this.viewRecordManager.getRecord(item, userManager.getUserByUserId(userId).getData()).getData();
 		session.setAttribute("favStatus", record.getStatus());
 		model.addAttribute("item", item);

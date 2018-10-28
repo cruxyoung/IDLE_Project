@@ -34,7 +34,8 @@ public class ItemManager {
 			if (item == null) {
 				return ServerResponse.createByErrorMessage("cannot find item");
 			}
-
+			item.setIsbanner("1");
+			item.setVisitTime(new Long(0));
 			ServerResponse<String> res = checkItemName(item.getName());
 			if (res.getStatus() != 0) {
 				return res;

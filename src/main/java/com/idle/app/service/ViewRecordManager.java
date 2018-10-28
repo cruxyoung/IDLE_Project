@@ -168,6 +168,8 @@ public class ViewRecordManager {
 		String queryString = "from ViewRecord where user.id=? and item.id=?";
 		Query query = this.sessionFactory.getCurrentSession().createQuery(queryString);
 		ViewRecord res = (ViewRecord)query.setParameter(0, user.getUserId()).setParameter(1, item.getId()).uniqueResult();
+		item.setVisitTime(item.getVisitTime()+1);
+		currentSeesion.merge(item);
 		return ServerResponse.createBySuccess("", res);
 	}
 	
