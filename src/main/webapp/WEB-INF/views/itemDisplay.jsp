@@ -79,8 +79,16 @@ color:red !important;
 
 
 
-<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script> 
+
+//取出传回来的参数error并与yes比较
+  var errori ='<%=request.getParameter("error")%>';
+  if(errori=='sameUser'){
+   alert("You cannot buy your own item");
+  }
+  
+</script>
 
 
 </body>

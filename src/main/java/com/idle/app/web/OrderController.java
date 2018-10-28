@@ -48,6 +48,9 @@ public class OrderController {
 			response.sendRedirect("http://localhost:8080/app/user/login?error=notlogin");
 			return null;
 		}
+		if(item.getOwner().getUserId().equals(userId)) {
+			response.sendRedirect("http://localhost:8080/app/item/get/"+id.toString()+"?error=sameUser");
+		}
 		User currentUser = this.userManager.getUserByUserId(userId).getData();
 		List<Address> addressList = addressManager.getAllAddressByUserId(userId).getData();
 		model.addAttribute("addressList", addressList);
