@@ -253,9 +253,9 @@ public class ItemController {
 				// Creating the directory to store file
 				String rootPath = System.getProperty("catalina.home");
 				File dir = new File(rootPath + File.separator );
-				if (!dir.exists())
-					dir.mkdirs();
-				
+//				if (!dir.exists())
+//					dir.mkdirs();
+//				
 				
 				String fileName2 = null;
 			    fileName2 = request.getSession().getServletContext().getRealPath("/");
